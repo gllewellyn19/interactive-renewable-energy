@@ -23,7 +23,7 @@ public class ExampleGameView extends RenewableEnergyType{
   private ResourceBundle languageResources;
 
   public ExampleGameView(ResourceBundle languageResources, SceneControls sceneControls) {
-    super(sceneControls, "example");
+    super(sceneControls, languageResources, "example");
     this.sceneControls = sceneControls;
     this.languageResources = languageResources;
   }
@@ -38,11 +38,6 @@ public class ExampleGameView extends RenewableEnergyType{
         rectangle.setX(rectangle.getX() + 10);
       }
     }
-  }
-
-  @Override
-  public Node createEnergyTypeDisplay() {
-    return null;
   }
 
   @Override

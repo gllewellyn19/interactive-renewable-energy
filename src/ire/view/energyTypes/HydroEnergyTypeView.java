@@ -1,6 +1,8 @@
 package ire.view.energyTypes;
 
 import ire.view.SceneControls;
+import ire.view.animations.HydroEnergyAnimation;
+import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 
@@ -8,20 +10,15 @@ public class HydroEnergyTypeView extends RenewableEnergyType{
 
   private SceneControls sceneControls;
 
-  public HydroEnergyTypeView(SceneControls sceneControls) {
-    super(sceneControls, "hydro");
+  public HydroEnergyTypeView(ResourceBundle languageResources, SceneControls sceneControls) {
+    super(sceneControls, languageResources, "hydro");
     this.sceneControls = sceneControls;
+    super.setEnergyAnimation(new HydroEnergyAnimation(languageResources, sceneControls));
   }
 
   @Override
   public void handleKeyInput(KeyCode code) {
 
-  }
-
-  //for the animation
-  @Override
-  public Node createEnergyTypeDisplay() {
-    return null;
   }
 
   @Override

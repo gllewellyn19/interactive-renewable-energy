@@ -136,9 +136,10 @@ public class Main extends Application implements SceneControls {
   /**
    * Starts the game and instead of using a BorderPane for the parent of the scene, uses a group
    * so that objects can be added
+   * @param gameOrAnimation true if a game should start and false if animation should start
    */
   @Override
-  public void startGame() {
+  public void startGame(boolean gameOrAnimation) {
     inGameCurrently = true;
     root = Optional.of(new Group());
     double prevWidth = scene.getWidth();
@@ -146,7 +147,11 @@ public class Main extends Application implements SceneControls {
     scene = new Scene(root.get(), prevWidth, prevHeight, GameView.DEFAULT_BACKGROUND);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     stage.setScene(scene);
-    gameView.getCurrentRenewableEnergyType().startGame();
+    if (gameOrAnimation) {
+      gameView.getCurrentRenewableEnergyType().startGame();
+    } else {
+      gameView.getCurrentRenewableEnergyType().startAnimation();
+    }
   }
 
   @Override

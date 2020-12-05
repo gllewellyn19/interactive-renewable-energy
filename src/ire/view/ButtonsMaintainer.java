@@ -8,6 +8,7 @@ import ire.view.buttons.GoToGameButton;
 import ire.view.buttons.HydroButton;
 import ire.view.buttons.NextButton;
 import ire.view.buttons.SolarButton;
+import ire.view.buttons.StartAnimationButton;
 import ire.view.buttons.StartGameButton;
 import ire.view.buttons.WindButton;
 import ire.view.energyTypes.ExampleGameView;
@@ -36,6 +37,7 @@ public class ButtonsMaintainer {
       buttons.put("goToAnimation", new GoToAnimationButton(languageResources, sceneControls));
       buttons.put("next", new NextButton(languageResources, sceneControls));
       buttons.put("startGame", new StartGameButton(languageResources, sceneControls));
+      buttons.put("startAnimation", new StartAnimationButton(languageResources, sceneControls));
       buttons.put("example", new ExampleGameButton(languageResources, startEnergyTypeable));
     } catch(MissingResourceException e) {
       errorPrintable.printErrorMessageAlert("missingResourceException", e.getKey());
@@ -87,7 +89,7 @@ public class ButtonsMaintainer {
   protected Node createOptionsEnergyTypeAnimation() {
     VBox animationButtons = new VBox();
     animationButtons.getChildren().add(buttons.get("back").getCurrInteractiveFeature());
-    animationButtons.getChildren().add(buttons.get("next").getCurrInteractiveFeature());
+    animationButtons.getChildren().add(buttons.get("startAnimation").getCurrInteractiveFeature());
     return animationButtons;
   }
 

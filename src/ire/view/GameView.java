@@ -25,7 +25,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
   public static final String STYLESHEETS_FOLDER = "stylesheets/";
   public static final Font DEFAULT_FONT_TITLE = new Font(26);
   public static final Font DEFAULT_FONT_DESCRIPTION = new Font(14);
-  public static final Paint DEFAULT_BACKGROUND = Color.HOTPINK;
+  public static final Paint DEFAULT_BACKGROUND = Color.AQUA;
 
   private ErrorPrinting errorPrinting;
   private ResourceBundle languageResources;
@@ -137,7 +137,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       Text topText = new Text(topTextContent);
       topText.setFont(DEFAULT_FONT_TITLE);
       topText.setFill(Color.CORAL);
-      BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.createEnergyTypeDisplay(),
+      BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.getAnimationPicture(),
           topText, null, null, buttonsMaintainer.createOptionsEnergyTypeAnimation());
       return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
           displayLayout));
@@ -206,13 +206,13 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
   public void startNewEnergyType(String energyType) {
     energyType = energyType.toLowerCase();
     if (energyType.equals("solar")) {
-      currentRenewableEnergyType = new SolarEnergyTypeView(sceneControls);
+      currentRenewableEnergyType = new SolarEnergyTypeView(languageResources, sceneControls);
       currentRenewableEnergyType.initializeEnergyType();
     } else if (energyType.equals("wind")) {
-      currentRenewableEnergyType = new WindEnergyTypeView(sceneControls);
+      currentRenewableEnergyType = new WindEnergyTypeView(languageResources, sceneControls);
       currentRenewableEnergyType.initializeEnergyType();
     } else if (energyType.equals("hydro")) {
-      currentRenewableEnergyType = new HydroEnergyTypeView(sceneControls);
+      currentRenewableEnergyType = new HydroEnergyTypeView(languageResources, sceneControls);
       currentRenewableEnergyType.initializeEnergyType();
     }
     //FIXME: delete when this example is no longer needed cams

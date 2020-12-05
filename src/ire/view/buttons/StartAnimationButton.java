@@ -4,12 +4,12 @@ import ire.view.SceneControls;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
-public class StartGameButton extends BoardButton {
+public class StartAnimationButton extends BoardButton{
 
   private SceneControls sceneControls;
 
-  public StartGameButton(ResourceBundle resources, SceneControls sceneControls) {
-    super(resources, new Button(), "StartGameButton");
+  public StartAnimationButton(ResourceBundle resources, SceneControls sceneControls) {
+    super(resources, new Button(), "StartAnimationButton");
     this.sceneControls = sceneControls;
     initializeButton();
   }
@@ -20,7 +20,7 @@ public class StartGameButton extends BoardButton {
   @Override
   protected void initializeButton() {
     super.initializeButton();
-    super.getCurrButton().setOnAction(event -> sceneControls.startGame(true));
+    super.getCurrButton().setOnAction(event -> sceneControls.startGame(false));
   }
 
 }

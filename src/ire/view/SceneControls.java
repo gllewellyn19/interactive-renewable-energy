@@ -10,7 +10,7 @@ public interface SceneControls {
   void restart();
   void createAnimationScreen();
   void createGameScreen();
-  void startGame();
+  void startGame(boolean gameOrAnimation);
   double getSceneWidth();
   double getSceneHeight();
   Optional<Group> getRoot();
