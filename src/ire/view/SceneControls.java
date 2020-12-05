@@ -14,4 +14,5 @@ public interface SceneControls {
   double getSceneWidth();
   double getSceneHeight();
   Optional<Group> getRoot();
+  boolean getInGameCurrently();
 }

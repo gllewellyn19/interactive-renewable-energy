@@ -2,6 +2,7 @@ package ire.view.energyTypes;
 
 import ire.view.SceneControls;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
 
 public class HydroEnergyTypeView extends RenewableEnergyType{
 
@@ -10,6 +11,11 @@ public class HydroEnergyTypeView extends RenewableEnergyType{
   public HydroEnergyTypeView(SceneControls sceneControls) {
     super(sceneControls, "hydro");
     this.sceneControls = sceneControls;
+  }
+
+  @Override
+  public void handleKeyInput(KeyCode code) {
+
   }
 
   @Override

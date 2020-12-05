@@ -25,7 +25,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
   public static final String STYLESHEETS_FOLDER = "stylesheets/";
   public static final Font DEFAULT_FONT_TITLE = new Font(26);
   public static final Font DEFAULT_FONT_DESCRIPTION = new Font(14);
-  public static final Paint DEFAULT_BACKGROUND = Color.AZURE;
+  public static final Paint DEFAULT_BACKGROUND = Color.HOTPINK;
 
   private ErrorPrinting errorPrinting;
   private ResourceBundle languageResources;
@@ -217,7 +217,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
     }
     //FIXME: delete when this example is no longer needed cams
     else if (energyType.equals("example")){
-      currentRenewableEnergyType = new ExampleGameView(sceneControls);
+      currentRenewableEnergyType = new ExampleGameView(languageResources, sceneControls);
       currentRenewableEnergyType.initializeEnergyType();
     }
     else {

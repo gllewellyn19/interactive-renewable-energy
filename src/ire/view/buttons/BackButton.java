@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 
 public class BackButton extends BoardButton{
 
-  private SceneControls sceneControls;
+  private final SceneControls sceneControls;
 
   public BackButton(ResourceBundle resources, SceneControls sceneControls) {
     super(resources, new Button(), "BackButton");
