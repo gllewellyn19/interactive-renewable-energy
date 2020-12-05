@@ -5,6 +5,8 @@ import ire.view.SceneControls;
 import ire.view.buttons.BackButton;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -53,6 +55,14 @@ public class ExampleGame extends Game {
       super.getSceneControls().getRoot().get().getChildren().add(rectangle);
       super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
           super.getSceneControls()).getCurrInteractiveFeature());
+      ImageView waveImageView = new ImageView();
+      Image waveImage = new Image("hydroAnimation/wave.jpg");
+      waveImageView.setImage(waveImage);
+      waveImageView.setFitHeight(200);
+      waveImageView.setFitWidth(200);
+      waveImageView.setX(500);
+      waveImageView.setY(500);
+      super.getSceneControls().getRoot().get().getChildren().add(waveImageView);
     }
     paused = false;
   }
