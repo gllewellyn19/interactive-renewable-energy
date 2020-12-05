@@ -2,6 +2,7 @@ package ire.view;
 
 import ire.view.buttons.BackButton;
 import ire.view.buttons.BoardInteractiveFeature;
+import ire.view.buttons.ExampleGameButton;
 import ire.view.buttons.GoToAnimationButton;
 import ire.view.buttons.GoToGameButton;
 import ire.view.buttons.HydroButton;
@@ -9,6 +10,7 @@ import ire.view.buttons.NextButton;
 import ire.view.buttons.SolarButton;
 import ire.view.buttons.StartGameButton;
 import ire.view.buttons.WindButton;
+import ire.view.energyTypes.ExampleGameView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -34,6 +36,7 @@ public class ButtonsMaintainer {
       buttons.put("goToAnimation", new GoToAnimationButton(languageResources, sceneControls));
       buttons.put("next", new NextButton(languageResources, sceneControls));
       buttons.put("startGame", new StartGameButton(languageResources, sceneControls));
+      buttons.put("example", new ExampleGameButton(languageResources, startEnergyTypeable));
     } catch(MissingResourceException e) {
       errorPrintable.printErrorMessageAlert("missingResourceException", e.getKey());
     }
@@ -47,6 +50,7 @@ public class ButtonsMaintainer {
     startingButtons.getChildren().add(buttons.get("solar").getCurrInteractiveFeature());
     startingButtons.getChildren().add(buttons.get("hydro").getCurrInteractiveFeature());
     startingButtons.getChildren().add(buttons.get("wind").getCurrInteractiveFeature());
+    startingButtons.getChildren().add(buttons.get("example").getCurrInteractiveFeature());
     return startingButtons;
   }
 

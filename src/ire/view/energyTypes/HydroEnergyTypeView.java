@@ -5,8 +5,11 @@ import javafx.scene.Node;
 
 public class HydroEnergyTypeView extends RenewableEnergyType{
 
+  private SceneControls sceneControls;
+
   public HydroEnergyTypeView(SceneControls sceneControls) {
     super(sceneControls, "hydro");
+    this.sceneControls = sceneControls;
   }
 
   @Override
@@ -21,8 +24,13 @@ public class HydroEnergyTypeView extends RenewableEnergyType{
   }
 
   @Override
-  public Node createEnergyTypeGame() {
+  public Node getGamePicture() {
     return null;
+  }
+
+  @Override
+  public void startGame() {
+
   }
 
   @Override

@@ -8,6 +8,8 @@ import java.util.Optional;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -31,6 +33,7 @@ public class Main extends Application implements SceneControls {
   private Timeline animation; //FIXME: Cams if you ever want to change the animation rate use:
   // animation.setRate(Math.pow(animation.getCurrentRate(),modifyingRate));
   private boolean inGameCurrently = false;
+  private Optional<Group> root = Optional.empty();
 
   public static void main(String[] args) {
     launch(args);
@@ -125,9 +128,35 @@ public class Main extends Application implements SceneControls {
     }
   }
 
+  /**
+   * Starts the game and instead of using a BorderPane for the parent of the scene, uses a group
+   * so that objects can be added
+   */
   @Override
   public void startGame() {
     inGameCurrently = true;
+    root = Optional.of(new Group());
+    double prevWidth = scene.getWidth();
+    double prevHeight = scene.getHeight();
+    scene = new Scene(root.get(), prevWidth, prevHeight, GameView.DEFAULT_BACKGROUND);
+    scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+    stage.setScene(scene);
+    gameView.getCurrentRenewableEnergyType().startGame();
+  }
+
+  @Override
+  public double getSceneWidth() {
+    return scene.getWidth();
+  }
+
+  @Override
+  public double getSceneHeight() {
+    return scene.getHeight();
+  }
+
+  @Override
+  public Optional<Group> getRoot() {
+    return root;
   }
 
   public Stage getStage() {
