@@ -19,6 +19,7 @@ public abstract class RenewableEnergyType {
     sceneControls.createGeneralEnergyTypeScene();
   }
 
+  //FIXME: Cams you can use this for your games
   public abstract void handleKeyInput(KeyCode code);
 
   public String getEnergyType() {
