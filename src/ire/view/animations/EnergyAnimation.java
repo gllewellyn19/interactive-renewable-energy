@@ -20,18 +20,19 @@ public abstract class EnergyAnimation implements Animationable{
   }
 
   /**
-   * Starts the animation by displaying the necessary buttons and putting the shapes/ images on the
-   * screen
+   * Starts the animation by displaying the necessary buttons
    */
   public void startAnimation() {
     if (sceneControls.getRoot().isPresent()) {
-      ButtonBase test = new BackButton(languageResources, sceneControls).getCurrButton();
-      test.setLayoutX(20);
-      test.setLayoutY(20);
-      sceneControls.getRoot().get().getChildren().add(new BackButton(languageResources,
-          sceneControls).getCurrInteractiveFeature());
-      sceneControls.getRoot().get().getChildren().add(new NextButton(languageResources,
-          this).getCurrInteractiveFeature());
+      ButtonBase backButton = new BackButton(languageResources, sceneControls).getCurrButton();
+      backButton.setLayoutX(0);
+      backButton.setLayoutY(0);
+      sceneControls.getRoot().get().getChildren().add(backButton);
+      ButtonBase nextButton = new NextButton(languageResources, this).
+          getCurrButton();
+      nextButton.setLayoutX(128);
+      nextButton.setLayoutY(0);
+      sceneControls.getRoot().get().getChildren().add(nextButton);
     }
   }
 

@@ -94,8 +94,12 @@ public class Main extends Application implements SceneControls {
   //FIXME: Cams for some reason this is not catching when arrows are pressed so you can either try
   // to figure it out or just not use arrows
   private void handleKeyInput(KeyCode code) {
+    System.out.println("received code "+code);
     if (gameView.getCurrentRenewableEnergyType()!=null) {
       gameView.getCurrentRenewableEnergyType().handleKeyInput(code);
+    }
+    if (code == KeyCode.B) {
+      restart();
     }
   }
 
@@ -104,6 +108,7 @@ public class Main extends Application implements SceneControls {
     Optional<Scene> newScene = gameView.createGeneralEnergyTypeScene(scene.getWidth(), scene.getHeight());
     if (newScene.isPresent()) {
       scene = newScene.get();
+      scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
       stage.setScene(scene);
     }
   }
@@ -117,6 +122,7 @@ public class Main extends Application implements SceneControls {
     Optional<Scene> newScene = gameView.createAnimationScreen(scene.getWidth(), scene.getHeight());
     if (newScene.isPresent()) {
       scene = newScene.get();
+      scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
       stage.setScene(scene);
     }
   }
@@ -130,6 +136,7 @@ public class Main extends Application implements SceneControls {
     Optional<Scene> newScene = gameView.createGameScreen(scene.getWidth(), scene.getHeight());
     if (newScene.isPresent()) {
       scene = newScene.get();
+      scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
       stage.setScene(scene);
     }
   }
