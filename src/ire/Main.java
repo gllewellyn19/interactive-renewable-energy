@@ -2,6 +2,7 @@ package ire;
 
 import ire.model.GamePlay;
 import ire.view.GameView;
+import ire.view.SceneControls;
 import java.awt.Dimension;
 import java.util.Optional;
 import javafx.application.Application;
@@ -11,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main extends Application implements SceneControls {
 
   public static final String RESOURCES = "resources/";
   public static final String DEFAULT_RESOURCE_FOLDER = "/" + RESOURCES;
@@ -34,7 +35,7 @@ public class Main extends Application {
    */
   @Override
   public void start(Stage stage) {
-    gameView = new GameView();
+    gameView = new GameView(this);
     gamePlay = new GamePlay();
     Optional<Scene> startingScene = gameView.makeAnInitialScene(DEFAULT_SIZE.width,
         DEFAULT_SIZE.height);
@@ -68,11 +69,19 @@ public class Main extends Application {
    * Sets the current scene and only classes with interfaces can do this since no classes gets
    * the entire main class
    *
-   * @param s scene to set current scene too
-   */
+
   public void setScene(Scene s) {
     this.scene = s;
     stage.setScene(scene);
+  } */
+
+  @Override
+  public void createGameScene() {
+    Optional<Scene> newScene = gameView.makeAnGameScene(scene.getWidth(), scene.getHeight());
+    if (newScene.isPresent()) {
+      scene = newScene.get();
+      stage.setScene(scene);
+    }
   }
 
   public Stage getStage() {
