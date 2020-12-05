@@ -1,6 +1,7 @@
 package ire;
 
 import ire.model.GamePlay;
+import ire.view.GameStatus;
 import ire.view.GameView;
 import ire.view.SceneControls;
 import java.awt.Dimension;
@@ -9,11 +10,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -32,7 +30,7 @@ public class Main extends Application implements SceneControls {
   private GamePlay gamePlay;
   private Timeline animation; //FIXME: Cams if you ever want to change the animation rate use:
   // animation.setRate(Math.pow(animation.getCurrentRate(),modifyingRate));
-  private boolean inGameCurrently = false;
+  private GameStatus gameStatus = GameStatus.NEITHER;
   private Optional<Group> root = Optional.empty();
 
   public static void main(String[] args) {
@@ -70,9 +68,12 @@ public class Main extends Application implements SceneControls {
    * @param elapsedTime time since last step
    */
   public void step(double elapsedTime) {
-    if (inGameCurrently) {
+    if (gameStatus == GameStatus.GAME) {
       System.out.println("in game and calling the step function");
-      gameView.stepCurrentGame(elapsedTime);
+      gameView.getCurrentRenewableEnergyType().stepGame(elapsedTime);
+    } else if (gameStatus == GameStatus.ANIMATION) {
+      System.out.println("in animation and calling the step function");
+      gameView.getCurrentRenewableEnergyType().stepAnimation(elapsedTime);
     }
   }
 
@@ -81,7 +82,7 @@ public class Main extends Application implements SceneControls {
    */
   @Override
   public void restart() {
-    inGameCurrently = false;
+    gameStatus = GameStatus.NEITHER;
     start(stage);
   }
 
@@ -139,17 +140,17 @@ public class Main extends Application implements SceneControls {
    * @param gameOrAnimation true if a game should start and false if animation should start
    */
   @Override
-  public void startGame(boolean gameOrAnimation) {
-    inGameCurrently = true;
+  public void startGame(GameStatus gameOrAnimation) {
+    gameStatus = gameOrAnimation;
     root = Optional.of(new Group());
     double prevWidth = scene.getWidth();
     double prevHeight = scene.getHeight();
     scene = new Scene(root.get(), prevWidth, prevHeight, GameView.DEFAULT_BACKGROUND);
     scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     stage.setScene(scene);
-    if (gameOrAnimation) {
+    if (gameStatus == GameStatus.GAME) {
       gameView.getCurrentRenewableEnergyType().startGame();
-    } else {
+    } else if (gameStatus == GameStatus.ANIMATION){
       gameView.getCurrentRenewableEnergyType().startAnimation();
     }
   }
@@ -173,7 +174,7 @@ public class Main extends Application implements SceneControls {
     return stage;
   }
 
-  public boolean getInGameCurrently() {
-    return inGameCurrently;
+  public GameStatus getGameStatus() {
+    return gameStatus;
   }
 }

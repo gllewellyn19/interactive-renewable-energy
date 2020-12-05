@@ -1,5 +1,6 @@
 package ire.view.energyTypes;
 
+import ire.view.GameStatus;
 import ire.view.LanguageControls;
 import ire.view.SceneControls;
 import ire.view.buttons.BackButton;
@@ -30,7 +31,7 @@ public class ExampleGameView extends RenewableEnergyType{
 
   @Override
   public void handleKeyInput(KeyCode code) {
-    if (sceneControls.getInGameCurrently()) {
+    if (sceneControls.getGameStatus() == GameStatus.GAME) {
       if (code == KeyCode.A) {
         rectangle.setX(rectangle.getX() - 10);
       }

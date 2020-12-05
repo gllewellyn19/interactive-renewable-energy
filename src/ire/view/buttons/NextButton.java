@@ -1,17 +1,17 @@
 package ire.view.buttons;
 
 import ire.view.SceneControls;
+import ire.view.animations.Animationable;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
 public class NextButton extends BoardButton {
 
-  private SceneControls sceneControls;
-  private int currentAnimationScene;
+  private Animationable animationable;
 
-  public NextButton(ResourceBundle resources, SceneControls sceneControls) {
+  public NextButton(ResourceBundle resources, Animationable animationable) {
     super(resources, new Button(), "NextButton");
-    this.sceneControls = sceneControls;
+    this.animationable = animationable;
     initializeButton();
   }
 
@@ -21,11 +21,7 @@ public class NextButton extends BoardButton {
   @Override
   protected void initializeButton() {
     super.initializeButton();
-    super.getCurrButton().setOnAction(event -> moveToNextAnimationScene());
-  }
-
-  private void moveToNextAnimationScene() {
-
+    super.getCurrButton().setOnAction(event -> animationable.stepToNextAnimation());
   }
 
 }

@@ -1,5 +1,6 @@
 package ire.view.buttons;
 
+import ire.view.GameStatus;
 import ire.view.SceneControls;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
@@ -20,7 +21,7 @@ public class StartAnimationButton extends BoardButton{
   @Override
   protected void initializeButton() {
     super.initializeButton();
-    super.getCurrButton().setOnAction(event -> sceneControls.startGame(false));
+    super.getCurrButton().setOnAction(event -> sceneControls.startGame(GameStatus.ANIMATION));
   }
 
 }

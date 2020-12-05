@@ -35,7 +35,6 @@ public class ButtonsMaintainer {
       buttons.put("back", new BackButton(languageResources, sceneControls));
       buttons.put("goToGame", new GoToGameButton(languageResources, sceneControls));
       buttons.put("goToAnimation", new GoToAnimationButton(languageResources, sceneControls));
-      buttons.put("next", new NextButton(languageResources, sceneControls));
       buttons.put("startGame", new StartGameButton(languageResources, sceneControls));
       buttons.put("startAnimation", new StartAnimationButton(languageResources, sceneControls));
       buttons.put("example", new ExampleGameButton(languageResources, startEnergyTypeable));

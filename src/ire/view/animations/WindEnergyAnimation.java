@@ -9,4 +9,9 @@ public class WindEnergyAnimation extends EnergyAnimation{
       SceneControls sceneControls) {
     super(languageResources, sceneControls);
   }
+
+  @Override
+  public void stepToNextAnimation() {
+
+  }
 }

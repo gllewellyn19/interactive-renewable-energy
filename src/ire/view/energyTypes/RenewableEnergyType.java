@@ -51,8 +51,17 @@ public abstract class RenewableEnergyType {
     energyAnimation.startAnimation();
   }
 
+  public void stepAnimation(double elapsedTime) {
+    energyAnimation.stepAnimation(elapsedTime);
+  }
+
   public Node getAnimationPicture() {
-    return getEnergyTypePicture();
+    ImageView toReturn = new ImageView();
+    Image energyTypePicture = new Image(energyType+IMAGE_EXTENSION);
+    toReturn.setImage(energyTypePicture);
+    toReturn.setFitHeight(400);
+    toReturn.setFitWidth(500);
+    return toReturn;
   }
 
   //FIXME: Cams if you want a picture to show up on the initial screen for the game then implement this
