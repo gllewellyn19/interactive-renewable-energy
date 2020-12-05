@@ -18,7 +18,7 @@ public class ExampleGame extends Game {
   private int yDirection = 1;
   private int ballSpeed = 20;
   private boolean paused = true;
-  private ResourceBundle languageResources;
+  private final ResourceBundle languageResources;
 
   public ExampleGame(ResourceBundle languageResources, SceneControls sceneControls) {
     super(sceneControls);

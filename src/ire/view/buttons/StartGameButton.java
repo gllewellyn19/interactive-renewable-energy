@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 
 public class StartGameButton extends BoardButton {
 
-  private SceneControls sceneControls;
+  private final SceneControls sceneControls;
 
   public StartGameButton(ResourceBundle resources, SceneControls sceneControls) {
     super(resources, new Button(), "StartGameButton");
