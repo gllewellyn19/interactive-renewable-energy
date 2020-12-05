@@ -23,4 +23,9 @@ public class SolarEnergyTypeView extends RenewableEnergyType {
   public Node createEnergyTypeGame() {
     return null;
   }
+
+  @Override
+  public void stepGame(double elapsedTime) {
+
+  }
 }

@@ -25,4 +25,9 @@ public class HydroEnergyTypeView extends RenewableEnergyType{
     return null;
   }
 
+  @Override
+  public void stepGame(double elapsedTime) {
+
+  }
+
 }

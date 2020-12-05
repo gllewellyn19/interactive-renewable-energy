@@ -28,4 +28,8 @@ public abstract class RenewableEnergyType {
   //FIXME: Cams implement this function to show how you want your game to initially look- this will
   // be displayed in the middle of the screen
   public abstract Node createEnergyTypeGame();
+
+  //FIXME: Cams implement this function to step through your game- this is called every second or so
+  // but only when an active game is happening
+  public abstract void stepGame(double elapsedTime);
 }

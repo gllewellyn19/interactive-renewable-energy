@@ -3,10 +3,10 @@ package ire.view.energyTypes;
 import ire.view.SceneControls;
 import javafx.scene.Node;
 
-public class WindEnergyTypeView extends RenewableEnergyType {
+public class ExampleGameView extends RenewableEnergyType{
 
-  public WindEnergyTypeView(SceneControls sceneControls) {
-    super(sceneControls, "wind");
+  public ExampleGameView(SceneControls sceneControls) {
+    super(sceneControls, "example");
   }
 
   @Override
@@ -28,5 +28,4 @@ public class WindEnergyTypeView extends RenewableEnergyType {
   public void stepGame(double elapsedTime) {
 
   }
-
 }

@@ -7,6 +7,7 @@ import ire.view.buttons.GoToGameButton;
 import ire.view.buttons.HydroButton;
 import ire.view.buttons.NextButton;
 import ire.view.buttons.SolarButton;
+import ire.view.buttons.StartGameButton;
 import ire.view.buttons.WindButton;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class ButtonsMaintainer {
       buttons.put("goToGame", new GoToGameButton(languageResources, sceneControls));
       buttons.put("goToAnimation", new GoToAnimationButton(languageResources, sceneControls));
       buttons.put("next", new NextButton(languageResources, sceneControls));
+      buttons.put("startGame", new StartGameButton(languageResources, sceneControls));
     } catch(MissingResourceException e) {
       errorPrintable.printErrorMessageAlert("missingResourceException", e.getKey());
     }
@@ -62,15 +64,18 @@ public class ButtonsMaintainer {
   /*
    * Creates the options for when entering the game of a type of renewable energy
    */
-  //FIXME: Cams implement this for all the buttons you want to show up for your game.
+  //FIXME: Cams implement this for all the buttons you want to show up for your game (don't have to the ones I put, but you probably need start)
   // with how this looks in GameView.createGameScreen(width, height), all the buttons will go in the
   // left but you can modify the line of that code that creates the border pane to add buttons in
   // different places
   // The line I'm referring to:
   // BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.createEnergyTypeGame(),
   //     topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame());
-  protected Node createOptionsEnergyTypeGame(){
-    return null;
+  protected Node createOptionsEnergyTypeGame(String energyType){
+    VBox gameButtons = new VBox();
+    gameButtons.getChildren().add(buttons.get("back").getCurrInteractiveFeature());
+    gameButtons.getChildren().add(buttons.get("startGame").getCurrInteractiveFeature());
+    return gameButtons;
   }
   /*
    * Creates the options for when entering the animation of a type of renewable energy

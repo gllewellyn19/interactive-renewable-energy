@@ -23,6 +23,4 @@ public class BackButton extends BoardButton{
     super.initializeButton();
     super.getCurrButton().setOnAction(event -> sceneControls.restart());
   }
-
-
 }

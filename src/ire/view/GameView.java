@@ -112,7 +112,8 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       topText.setFont(DEFAULT_FONT_TITLE);
       topText.setFill(Color.CORAL);
       BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.createEnergyTypeGame(),
-          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame());
+          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame(
+              currentRenewableEnergyType.getEnergyType()));
       return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
           displayLayout));
     } catch (MissingResourceException e) {
@@ -197,5 +198,9 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
     else {
       errorPrinting.printErrorMessageAlert("energyTypeNotFound", energyType);
     }
+  }
+
+  public void stepCurrentGame(double elapsedTime) {
+    currentRenewableEnergyType.stepGame(elapsedTime);
   }
 }
