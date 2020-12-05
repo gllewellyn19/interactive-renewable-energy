@@ -1,7 +1,6 @@
 package ire.view.buttons;
 
 import ire.view.SceneControls;
-import ire.view.StartEnergyTypeable;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 

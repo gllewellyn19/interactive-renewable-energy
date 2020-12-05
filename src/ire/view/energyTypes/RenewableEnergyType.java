@@ -1,10 +1,10 @@
 package ire.view.energyTypes;
 
+import ire.view.GameStatus;
 import ire.view.SceneControls;
 import ire.view.animations.EnergyAnimation;
-import java.io.File;
+import ire.view.games.Game;
 import java.util.ResourceBundle;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,10 +15,11 @@ public abstract class RenewableEnergyType {
   //public static final String IMAGE_PATH = new File("");
   public static final String IMAGE_EXTENSION = ".jpg";
 
-  private String energyType;
-  private SceneControls sceneControls;
+  private final String energyType;
+  private final SceneControls sceneControls;
   private EnergyAnimation energyAnimation;
-  private ResourceBundle languageResources;
+  private final ResourceBundle languageResources;
+  private Game game;
 
   public RenewableEnergyType(SceneControls sceneControls, ResourceBundle languageResources,
       String energyType) {
@@ -31,8 +32,14 @@ public abstract class RenewableEnergyType {
     sceneControls.createGeneralEnergyTypeScene();
   }
 
-  //FIXME: Cams you can use this for your games
-  public abstract void handleKeyInput(KeyCode code);
+  public void handleKeyInput(KeyCode code) {
+    if (sceneControls.getGameStatus() == GameStatus.GAME) {
+      game.handleKeyInput(code);
+    }
+    else if (sceneControls.getGameStatus() == GameStatus.ANIMATION) {
+      energyAnimation.handleKeyInput(code);
+    }
+  }
 
   public String getEnergyType() {
     return energyType;
@@ -64,20 +71,24 @@ public abstract class RenewableEnergyType {
     return toReturn;
   }
 
-  //FIXME: Cams if you want a picture to show up on the initial screen for the game then implement this
-  // method
-  public abstract Node getGamePicture();
+  public Node getGamePicture() {
+    return game.getGamePicture();
+  }
 
-  //FIXME: Cams implement this function to show how you want your game to initially look- this will
-  // be displayed in the middle of the screen- can use sceneControls to get the root to add shapes to
-  public abstract void startGame();
+  public void startGame() {
+    game.startGame();
+  }
 
-  //FIXME: Cams implement this function to step through your game- this is called every second or so
-  // but only when an active game is happening
-  public abstract void stepGame(double elapsedTime);
+  public void stepGame(double elapsedTime) {
+    game.stepGame(elapsedTime);
+  }
 
   protected void setEnergyAnimation(EnergyAnimation energyAnimation) {
     this.energyAnimation = energyAnimation;
+  }
+
+  protected void setEnergyGame(Game game) {
+    this.game = game;
   }
 
   protected ResourceBundle getLanguageResources() {

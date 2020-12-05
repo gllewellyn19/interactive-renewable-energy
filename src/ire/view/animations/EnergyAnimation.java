@@ -7,6 +7,7 @@ import java.awt.Button;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBase;
+import javafx.scene.input.KeyCode;
 
 public abstract class EnergyAnimation implements Animationable{
 
@@ -33,6 +34,18 @@ public abstract class EnergyAnimation implements Animationable{
       nextButton.setLayoutX(128);
       nextButton.setLayoutY(0);
       sceneControls.getRoot().get().getChildren().add(nextButton);
+    }
+  }
+
+  /**
+   * Checks if the user entered a cheat key and does the necessary action. For example, the user
+   * pressing n moves to the next animation
+   *
+   * @param code code that could be cheat key
+   */
+  public void handleKeyInput(KeyCode code) {
+    if (code == KeyCode.N) {
+      stepToNextAnimation();
     }
   }
 
