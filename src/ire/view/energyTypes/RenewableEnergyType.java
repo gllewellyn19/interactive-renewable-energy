@@ -1,11 +1,17 @@
 package ire.view.energyTypes;
 
 import ire.view.SceneControls;
+import java.io.File;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
 public abstract class RenewableEnergyType {
+
+  //public static final String IMAGE_PATH = new File("");
+  public static final String IMAGE_EXTENSION = ".jpg";
 
   private String energyType;
   private SceneControls sceneControls;
@@ -26,7 +32,14 @@ public abstract class RenewableEnergyType {
     return energyType;
   }
 
-  public abstract Node getEnergyTypePicture();
+  public Node getEnergyTypePicture() {
+    ImageView toReturn = new ImageView();
+    Image energyTypePicture = new Image(energyType+IMAGE_EXTENSION);
+    toReturn.setImage(energyTypePicture);
+    toReturn.setFitHeight(500);
+    toReturn.setFitWidth(600);
+    return toReturn;
+  }
 
   public abstract Node createEnergyTypeDisplay();
 

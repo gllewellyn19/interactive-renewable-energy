@@ -18,11 +18,6 @@ public class HydroEnergyTypeView extends RenewableEnergyType{
 
   }
 
-  @Override
-  public Node getEnergyTypePicture() {
-    return null;
-  }
-
   //for the animation
   @Override
   public Node createEnergyTypeDisplay() {

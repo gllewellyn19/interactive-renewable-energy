@@ -41,11 +41,6 @@ public class ExampleGameView extends RenewableEnergyType{
   }
 
   @Override
-  public Node getEnergyTypePicture() {
-    return null;
-  }
-
-  @Override
   public Node createEnergyTypeDisplay() {
     return null;
   }

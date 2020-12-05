@@ -19,11 +19,6 @@ public class WindEnergyTypeView extends RenewableEnergyType {
   }
 
   @Override
-  public Node getEnergyTypePicture() {
-    return null;
-  }
-
-  @Override
   public Node createEnergyTypeDisplay() {
     return null;
   }
