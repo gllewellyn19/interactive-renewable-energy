@@ -52,6 +52,7 @@ public class Main extends Application implements SceneControls {
   /**
    * Called whenever the back button is called and restarts the game with the current stage
    */
+  @Override
   public void restart() {
     start(stage);
   }
@@ -76,8 +77,34 @@ public class Main extends Application implements SceneControls {
   } */
 
   @Override
-  public void createGameScene() {
-    Optional<Scene> newScene = gameView.makeAnGameScene(scene.getWidth(), scene.getHeight());
+  public void createGeneralEnergyTypeScene() {
+    Optional<Scene> newScene = gameView.createGeneralEnergyTypeScene(scene.getWidth(), scene.getHeight());
+    if (newScene.isPresent()) {
+      scene = newScene.get();
+      stage.setScene(scene);
+    }
+  }
+
+  /**
+   * Creates the screen for the animation of the current type of renewable energy that has been
+   * selected
+   */
+  @Override
+  public void createAnimationScreen() {
+    Optional<Scene> newScene = gameView.createAnimationScreen(scene.getWidth(), scene.getHeight());
+    if (newScene.isPresent()) {
+      scene = newScene.get();
+      stage.setScene(scene);
+    }
+  }
+
+  /**
+   * Creates the screen for the game of the current type of renewable energy that has been
+   * selected
+   */
+  @Override
+  public void createGameScreen() {
+    Optional<Scene> newScene = gameView.createGameScreen(scene.getWidth(), scene.getHeight());
     if (newScene.isPresent()) {
       scene = newScene.get();
       stage.setScene(scene);

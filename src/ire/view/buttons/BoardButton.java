@@ -17,7 +17,7 @@ public abstract class BoardButton extends BoardInteractiveFeature{
   /**
    * initialize button by setting its text and ID
    */
-  public void initializeButton() {
+  protected void initializeButton() {
     setTextAndID();
   }
 

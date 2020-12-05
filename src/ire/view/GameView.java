@@ -1,8 +1,10 @@
 package ire.view;
 
 import ire.Main;
+import ire.view.energyTypes.HydroEnergyTypeView;
 import ire.view.energyTypes.RenewableEnergyType;
 import ire.view.energyTypes.SolarEnergyTypeView;
+import ire.view.energyTypes.WindEnergyTypeView;
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -43,14 +45,16 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       setupSuccessful = false;
     }
     if (setupSuccessful) {
-      buttonsMaintainer = new ButtonsMaintainer(languageResources, this);
+      buttonsMaintainer = new ButtonsMaintainer(languageResources, this,
+          sceneControls, errorPrinting);
     }
   }
 
   /**
    * @param width  - width of new scene
    * @param height -  height of new scene
-   * @return - starting scene with the default css that appears in the center of the screen
+   * @return - starting scene with the default css that appears in the center of the screen (creates
+   * the splash screen)
    */
   public Optional<Scene> makeAnInitialScene(int width, int height) {
     try {
@@ -73,18 +77,65 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
   /**
    * @param width  - width of new scene
    * @param height -  height of new scene
-   * @return - starting scene with the default css that appears in the center of the screen
+   * @return - starting scene for the chosen type of renewable energy
    */
-  public Optional<Scene> makeAnGameScene(double width, double height) {
+  public Optional<Scene> createGeneralEnergyTypeScene(double width, double height) {
     try {
       String topTextContent = languageResources.getString("startingMessage"+
           currentRenewableEnergyType.getEnergyType());
       Text topText = new Text(topTextContent);
       topText.setFont(DEFAULT_FONT_TITLE);
       topText.setFill(Color.CORAL);
-      //BorderPane.setAlignment(topText, Pos.TOP_CENTER);
-      BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.createEnergyTypeDisplay(),
+      BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.getEnergyTypePicture(),
           topText, null, buttonsMaintainer.createOptionsGeneralEnergyType(), null);
+      return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
+          displayLayout));
+    } catch (MissingResourceException e) {
+      errorPrinting.printErrorMessageAlert("missingResourceException",
+          "Language Resources");
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * @param width  - width of new scene
+   * @param height -  height of new scene
+   * @return - scene for the game portion of the selected renewable energy type
+   */
+  public Optional<Scene> createGameScreen(double width, double height) {
+    try {
+      //FIXME: Cams If you want a description for your game, modify the value of the key startingMessageGame+energyType
+      // (i.e. startingMessageGamesolar) in the english resource bundle
+      String topTextContent = languageResources.getString("startingMessageGame"+
+          currentRenewableEnergyType.getEnergyType());
+      Text topText = new Text(topTextContent);
+      topText.setFont(DEFAULT_FONT_TITLE);
+      topText.setFill(Color.CORAL);
+      BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.createEnergyTypeGame(),
+          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame());
+      return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
+          displayLayout));
+    } catch (MissingResourceException e) {
+      errorPrinting.printErrorMessageAlert("missingResourceException",
+          "Language Resources");
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * @param width  - width of new scene
+   * @param height -  height of new scene
+   * @return - scene for the animation portion of the selected renewable energy type
+   */
+  public Optional<Scene> createAnimationScreen(double width, double height) {
+    try {
+      String topTextContent = languageResources.getString("startingMessageAnimation"+
+          currentRenewableEnergyType.getEnergyType());
+      Text topText = new Text(topTextContent);
+      topText.setFont(DEFAULT_FONT_TITLE);
+      topText.setFill(Color.CORAL);
+      BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.createEnergyTypeDisplay(),
+          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeAnimation());
       return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
           displayLayout));
     } catch (MissingResourceException e) {
@@ -137,9 +188,11 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       currentRenewableEnergyType = new SolarEnergyTypeView(sceneControls);
       currentRenewableEnergyType.initializeEnergyType();
     } else if (energyType.equals("wind")) {
-
+      currentRenewableEnergyType = new WindEnergyTypeView(sceneControls);
+      currentRenewableEnergyType.initializeEnergyType();
     } else if (energyType.equals("hydro")) {
-
+      currentRenewableEnergyType = new HydroEnergyTypeView(sceneControls);
+      currentRenewableEnergyType.initializeEnergyType();
     }
     else {
       errorPrinting.printErrorMessageAlert("energyTypeNotFound", energyType);

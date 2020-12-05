@@ -18,7 +18,7 @@ public class WindButton extends BoardButton {
    * initializes button to start wind screen when pressed
    */
   @Override
-  public void initializeButton() {
+  protected void initializeButton() {
     super.initializeButton();
     super.getCurrButton().setOnAction(event -> startEnergyTypeable.startNewEnergyType("wind"));
   }

@@ -4,5 +4,8 @@ import javafx.scene.Scene;
 
 public interface SceneControls {
 
-  void createGameScene();
+  void createGeneralEnergyTypeScene();
+  void restart();
+  void createAnimationScreen();
+  void createGameScreen();
 }

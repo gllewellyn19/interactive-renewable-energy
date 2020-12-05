@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class ErrorPrinting {
+public class ErrorPrinting implements ErrorPrintable{
 
   public static final String DEFAULT_MESSAGE_MISSING_EXCEPTIONS = "The file for resources exceptions"
       + "is missing";

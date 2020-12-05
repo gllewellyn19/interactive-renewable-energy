@@ -14,12 +14,18 @@ public abstract class RenewableEnergyType {
   }
 
   public void initializeEnergyType() {
-    sceneControls.createGameScene();
+    sceneControls.createGeneralEnergyTypeScene();
   }
 
   public String getEnergyType() {
     return energyType;
   }
 
+  public abstract Node getEnergyTypePicture();
+
   public abstract Node createEnergyTypeDisplay();
+
+  //FIXME: Cams implement this function to show how you want your game to initially look- this will
+  // be displayed in the middle of the screen
+  public abstract Node createEnergyTypeGame();
 }

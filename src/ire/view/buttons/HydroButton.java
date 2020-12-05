@@ -18,7 +18,7 @@ public class HydroButton extends BoardButton {
    * initializes button to start hydro screen when pressed
    */
   @Override
-  public void initializeButton() {
+  protected void initializeButton() {
     super.initializeButton();
     super.getCurrButton().setOnAction(event -> startEnergyTypeable.startNewEnergyType("hydro"));
   }

@@ -10,7 +10,17 @@ public class SolarEnergyTypeView extends RenewableEnergyType {
   }
 
   @Override
+  public Node getEnergyTypePicture() {
+    return null;
+  }
+
+  @Override
   public Node createEnergyTypeDisplay() {
+    return null;
+  }
+
+  @Override
+  public Node createEnergyTypeGame() {
     return null;
   }
 }

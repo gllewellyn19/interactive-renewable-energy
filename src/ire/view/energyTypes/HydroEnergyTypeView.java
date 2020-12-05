@@ -3,10 +3,10 @@ package ire.view.energyTypes;
 import ire.view.SceneControls;
 import javafx.scene.Node;
 
-public class WindEnergyTypeView extends RenewableEnergyType {
+public class HydroEnergyTypeView extends RenewableEnergyType{
 
-  public WindEnergyTypeView(SceneControls sceneControls) {
-    super(sceneControls, "wind");
+  public HydroEnergyTypeView(SceneControls sceneControls) {
+    super(sceneControls, "hydro");
   }
 
   @Override
@@ -14,6 +14,7 @@ public class WindEnergyTypeView extends RenewableEnergyType {
     return null;
   }
 
+  //for the animation
   @Override
   public Node createEnergyTypeDisplay() {
     return null;
