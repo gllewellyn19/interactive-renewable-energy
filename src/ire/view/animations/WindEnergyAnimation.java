@@ -9,11 +9,11 @@ public class WindEnergyAnimation extends EnergyAnimation{
   public static final String ANIMATION_FILE_PATH = "windAnimation/";
   public static final int TOTAL_NUMBER_ANIMATIONS = 5;
 
-
   public WindEnergyAnimation(ResourceBundle languageResources,
       SceneControls sceneControls, ErrorPrintable errorPrintable) {
     super(languageResources, sceneControls, errorPrintable);
   }
+
   @Override
   public void startAnimation() {
     try {

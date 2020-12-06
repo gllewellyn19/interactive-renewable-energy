@@ -1,181 +1,123 @@
 package ire.view.games;
 
+import ire.Main;
 import ire.view.GameStatus;
 import ire.view.SceneControls;
-
-import java.util.ArrayList;
-import java.util.List;
+import ire.view.buttons.BackButton;
 import java.util.Random;
 import java.util.ResourceBundle;
-
-import ire.view.buttons.BackButton;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class HydroGame extends Game {
 
-  private static final int NEW_SUN_COUNT = 50;
+    public static final int DEFAULT_TURBINE_STEP = 10;
+    public static final int FISH_SPEED = 150;
+    public static final int DAM_START_Y = Main.DEFAULT_SIZE.width - 200;
+    public static final int INC_SCORE_BY = 10;
+    public static final String SCORE_INDICATOR = "Score: ";
 
-  private Rectangle prop;
-  private List<Circle> fish = new ArrayList<>();
-  private double xDirection;
-  private List<Double> yDirection;
-  private int sunSpeed;
-  private boolean paused;
-  private final ResourceBundle languageResources;
-  private int sunCount;
-  private Random rand;
-  private int lives;
-  private int score;
-  private Text scoreText;
-  private Text livesText;
+    private Rectangle turbine;
+    private final ResourceBundle languageResources;
+    private boolean paused = true;
+    private Rectangle fish;
+    private int score=0;
+    private Text scoreDisplay;
 
-  public HydroGame(ResourceBundle languageResources, SceneControls sceneControls) {
-    super(sceneControls);
-    this.languageResources = languageResources;
-    sunCount = 0;
-    paused = true;
-    sunSpeed = 100;
-    rand = new Random();
-    xDirection = .80;
-    lives = 3;
-    score = 0;
-    scoreText = new Text();
-    scoreText.setX(10);
-    scoreText.setY(50);
-    scoreText.setText("Score: "+score);
-    livesText = new Text();
-    livesText.setX(10);
-    livesText.setY(70);
-    livesText.setText("Lives: "+score);
-  }
-
-  @Override
-  public void handleKeyInput(KeyCode code) {
-    if (super.getSceneControls().getGameStatus() == GameStatus.GAME) {
-      if (code == KeyCode.A) {
-        prop.setX(prop.getX() - 20);
-      }
-      if (code == KeyCode.S) {
-        prop.setX(prop.getX() + 20);
-      }
+    public HydroGame(ResourceBundle languageResources, SceneControls sceneControls) {
+        super(sceneControls);
+        this.languageResources = languageResources;
     }
-  }
 
-  @Override
-  public Node getGamePicture() {
-    return null;
-  }
-
-  @Override
-  public void startGame() {
-    Circle sun = new Circle(100, 10, 20);
-    Image img1 = new Image("/games/fish.png");
-    sun.setFill(new ImagePattern(img1));
-    fish.add(sun);
-    prop = new Rectangle(super.getSceneControls().getSceneWidth() - 100, super.getSceneControls().getSceneHeight() - 100, 100, 10);
-    Image img2 = new Image("/games/propellor.png");
-    prop.setFill(new ImagePattern(img2));
-    if (super.getSceneControls().getRoot().isPresent()) {
-      super.getSceneControls().getRoot().get().getChildren().add(sun);
-      super.getSceneControls().getRoot().get().getChildren().add(prop);
-      super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
-              super.getSceneControls()).getCurrInteractiveFeature());
-      super.getSceneControls().getRoot().get().getChildren().add(scoreText);
-      super.getSceneControls().getRoot().get().getChildren().add(livesText);
-    }
-    paused = false;
-  }
-
-  @Override
-  public void stepGame(double elapsedTime) {
-    if (!paused) {
-      updateSuns(elapsedTime);
-      sunCount += 1;
-    }
-    checkForNewSun();
-    checkIfAlive();
-    updateTexts();
-  }
-
-  private void updateTexts(){
-    scoreText.setText("Score: "+score);
-    livesText.setText("Lives: "+lives);
-  }
-
-  private void checkForNewSun() {
-    if(sunCount == NEW_SUN_COUNT){
-      Circle sun = new Circle(rand.nextInt((int)super.getSceneControls().getSceneWidth()), 10, 20);
-      Image img1 = new Image("/games/sun.png");
-      sun.setFill(new ImagePattern(img1));
-      fish.add(sun);
-      yDirection.add(yDirection.get(0));
-      if (super.getSceneControls().getRoot().isPresent()) {
-        super.getSceneControls().getRoot().get().getChildren().add(sun);
-      }
-      sunCount = 0;
-    }
-  }
-
-  private void updateSuns(double elapsedTime){
-    for(int i = 0; i< fish.size(); i++){
-      Circle sun = fish.get(i);
-      double newBallX = sun.getCenterX() + xDirection * sunSpeed * elapsedTime;
-      double newBallY = sun.getCenterY() + yDirection.get(i) * sunSpeed * elapsedTime;
-      sun.setCenterX(newBallX);
-      sun.setCenterY(newBallY);
-      if(sun.intersects(prop.getLayoutBounds())){
-        score += 10;
-        removeSunFromRoot(sun);
-        yDirection.remove(i);
-        fish.remove(sun);
-      } else if (sun.getCenterX() > super.getSceneControls().getSceneWidth() || sun.getCenterX() <= 0) {
-        double speed = yDirection.get(i);
-        yDirection.remove(i);
-        yDirection.add(i,speed*-1);
-      } else if (sun.getCenterY() > prop.getY() + prop.getHeight()) {
-        lives -= 1;
-        removeSunFromRoot(sun);
-        yDirection.remove(i);
-        fish.remove(sun);
-      }
-    }
-  }
-
-  private void removeSunFromRoot(Circle sun) {
-    if (super.getSceneControls().getRoot().isPresent()) {
-      try {
-        super.getSceneControls().getRoot().get().getChildren().remove(sun);
-      } catch (IllegalArgumentException e) {
-        //nothing happens
-      }
-    }
-  }
-
-  private void checkIfAlive(){
-    if(lives == 0){
-      paused = true;
-      if (super.getSceneControls().getRoot().isPresent()) {
-        try{
-          super.getSceneControls().getRoot().get().getChildren().remove(scoreText);
-          super.getSceneControls().getRoot().get().getChildren().remove(livesText);
+    @Override
+    public void handleKeyInput(KeyCode code) {
+        if (super.getSceneControls().getGameStatus() == GameStatus.GAME) {
+            if (code == KeyCode.A) {
+                turbine.setX(turbine.getX() - DEFAULT_TURBINE_STEP);
+            }
+            if (code == KeyCode.S) {
+                turbine.setX(turbine.getX() + DEFAULT_TURBINE_STEP);
+            }
         }
-        catch(IllegalArgumentException e){
-          //do nothing
-        }
-      }
-      Text loseText = new Text();
-      loseText.setText("You lose. Your score is: "+score);
-      loseText.setX(10);
-      loseText.setY(super.getSceneControls().getSceneHeight()/2);
-      if (super.getSceneControls().getRoot().isPresent()) {
-        super.getSceneControls().getRoot().get().getChildren().add(loseText);
-      }
     }
-  }
+
+    @Override
+    public Node getGamePicture() {
+        return null;
+    }
+
+    @Override
+    public void startGame() {
+        turbine = new Rectangle(Main.DEFAULT_SIZE.width/2.0, Main.DEFAULT_SIZE.width-200, 200, 200);
+        turbine.setFill(new ImagePattern(new Image("hydroGame/turbine.jpg")));
+        fish = new Rectangle(Main.DEFAULT_SIZE.width/2.0, 10, 75, 75);
+        fish.setFill(new ImagePattern(new Image("hydroGame/fish.jpg")));
+        scoreDisplay = new Text(SCORE_INDICATOR + "0");
+        scoreDisplay.setX(Main.DEFAULT_SIZE.width-100);
+        scoreDisplay.setY(50);
+        scoreDisplay.setFont(new Font(24));
+        if (super.getSceneControls().getRoot().isPresent()) {
+            super.getSceneControls().getRoot().get().getChildren().add(fish);
+            super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
+                    super.getSceneControls()).getCurrInteractiveFeature());
+            super.getSceneControls().getRoot().get().getChildren().add(scoreDisplay);
+            ImageView damImageView = new ImageView();
+            Image damImage = new Image("hydroGame/dam.jpg");
+            damImageView.setImage(damImage);
+            damImageView.setFitHeight(200);
+            damImageView.setFitWidth(Main.DEFAULT_SIZE.width);
+            damImageView.setX(0);
+            damImageView.setY(DAM_START_Y);
+            super.getSceneControls().getRoot().get().getChildren().add(damImageView);
+            super.getSceneControls().getRoot().get().getChildren().add(turbine);
+        }
+        paused = false;
+    }
+
+    @Override
+    public void stepGame(double elapsedTime) {
+        if (!paused) {
+            double newFishY = fish.getY() + FISH_SPEED * elapsedTime;
+            fish.setY(newFishY);
+            checkFishHitDam();
+        }
+    }
+
+    /*
+     * Checks to see if the fish hits the dam- if it did resets its position
+     * If the fish did not hit the turbine then increases the score
+     */
+    private void checkFishHitDam() {
+        System.out.println("fish y is "+fish.getY() +" and dam start is "+DAM_START_Y);
+        if (fish.getY() + fish.getHeight() >= DAM_START_Y) {
+            if (!fishInBoundsTurbine()) {
+                score+=INC_SCORE_BY;
+                updateScoreDisplay();
+            }
+            //reset the fish
+            fish.setX(Math.random()*((Main.DEFAULT_SIZE.width- fish.getWidth()) + 1));
+            fish.setY(10);
+        }
+    }
+
+    private void updateScoreDisplay() {
+        scoreDisplay.setText(SCORE_INDICATOR+score);
+    }
+
+    /*
+     * Returns true if the fish was hit by the turbine
+     */
+    private boolean fishInBoundsTurbine() {
+        return (fish.getX() >= turbine.getX() && fish.getX() <= (turbine.getX()+ turbine.getWidth())) ||
+                ((fish.getX()+ fish.getWidth()) >= turbine.getX() && (fish.getX()+ fish.getWidth()) <=
+                        (turbine.getX()+ turbine.getWidth()));
+    }
 }
