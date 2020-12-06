@@ -56,7 +56,7 @@ public class ExampleGame extends Game {
       super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
           super.getSceneControls()).getCurrInteractiveFeature());
       ImageView waveImageView = new ImageView();
-      Image waveImage = new Image("hydroAnimation/wave.jpg");
+      Image waveImage = new Image("hydroAnimation/water.jpg");
       waveImageView.setImage(waveImage);
       waveImageView.setFitHeight(200);
       waveImageView.setFitWidth(200);
