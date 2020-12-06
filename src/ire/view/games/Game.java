@@ -107,8 +107,9 @@ public abstract class Game {
     gameOver = true;
     pause = true;
     Text gameMessage = new Text(languageResources.getString(gameMessageKey));
-    gameMessage.setX(Main.DEFAULT_SIZE.width/2.0-200);
-    gameMessage.setY(Main.DEFAULT_SIZE.height/2.0);
+    gameMessage.setX(90);
+    gameMessage.setY(sceneControls.getSceneHeight()/2.0 - 200);
+    gameMessage.setFont(new Font(30));
     sceneControls.getRoot().get().getChildren().add(gameMessage);
   }
 
@@ -183,8 +184,8 @@ public abstract class Game {
   protected abstract String getEnergyType();
 
   protected void unPauseIfPaused() {
-    if (isPaused()) {
-      pause = false;
+    if (isPaused() && funFact.getText().equals("")) {
+       unPause();
     }
   }
 }
