@@ -114,7 +114,6 @@ public class HydroGame extends Game {
       Image img1 = new Image("/games/sun.png");
       sun.setFill(new ImagePattern(img1));
       fish.add(sun);
-      xDirection.add(rand.nextDouble());
       yDirection.add(yDirection.get(0));
       if (super.getSceneControls().getRoot().isPresent()) {
         super.getSceneControls().getRoot().get().getChildren().add(sun);
@@ -126,23 +125,23 @@ public class HydroGame extends Game {
   private void updateSuns(double elapsedTime){
     for(int i = 0; i< fish.size(); i++){
       Circle sun = fish.get(i);
-      double newBallX = sun.getCenterX() + xDirection.get(i) * sunSpeed * elapsedTime;
+      double newBallX = sun.getCenterX() + xDirection * sunSpeed * elapsedTime;
       double newBallY = sun.getCenterY() + yDirection.get(i) * sunSpeed * elapsedTime;
       sun.setCenterX(newBallX);
       sun.setCenterY(newBallY);
       if(sun.intersects(prop.getLayoutBounds())){
         score += 10;
         removeSunFromRoot(sun);
-        xDirection.remove(i);
+        yDirection.remove(i);
         fish.remove(sun);
       } else if (sun.getCenterX() > super.getSceneControls().getSceneWidth() || sun.getCenterX() <= 0) {
-        double speed = xDirection.get(i);
-        xDirection.remove(i);
-        xDirection.add(i,speed*-1);
+        double speed = yDirection.get(i);
+        yDirection.remove(i);
+        yDirection.add(i,speed*-1);
       } else if (sun.getCenterY() > prop.getY() + prop.getHeight()) {
         lives -= 1;
         removeSunFromRoot(sun);
-        xDirection.remove(i);
+        yDirection.remove(i);
         fish.remove(sun);
       }
     }
