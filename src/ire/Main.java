@@ -69,10 +69,10 @@ public class Main extends Application implements SceneControls {
    */
   public void step(double elapsedTime) {
     if (gameStatus == GameStatus.GAME) {
-      System.out.println("in game and calling the step function");
+      //System.out.println("in game and calling the step function");
       gameView.getCurrentRenewableEnergyType().stepGame(elapsedTime);
     } else if (gameStatus == GameStatus.ANIMATION) {
-      System.out.println("in animation and calling the step function");
+      //System.out.println("in animation and calling the step function");
       gameView.getCurrentRenewableEnergyType().stepAnimation(elapsedTime);
     }
   }

@@ -206,10 +206,10 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
   public void startNewEnergyType(String energyType) {
     energyType = energyType.toLowerCase();
     if (energyType.equals("solar")) {
-      currentRenewableEnergyType = new SolarEnergyTypeView(languageResources, sceneControls);
+      currentRenewableEnergyType = new SolarEnergyTypeView(languageResources, sceneControls, errorPrinting);
       currentRenewableEnergyType.initializeEnergyType();
     } else if (energyType.equals("wind")) {
-      currentRenewableEnergyType = new WindEnergyTypeView(languageResources, sceneControls);
+      currentRenewableEnergyType = new WindEnergyTypeView(languageResources, sceneControls, errorPrinting);
       currentRenewableEnergyType.initializeEnergyType();
     } else if (energyType.equals("hydro")) {
       currentRenewableEnergyType = new HydroEnergyTypeView(languageResources, sceneControls, errorPrinting);
