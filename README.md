@@ -1,8 +1,7 @@
 # interactive-renewable-energy
 Code created as part of the HackDuke hackathon. Creates an interactive way of learning about renewable energy designed for younger children. 
 
-
-
+### Running:
 
 ### Cheat codes:
 #### General: 
@@ -12,6 +11,8 @@ Code created as part of the HackDuke hackathon. Creates an interactive way of le
 * N- takes you to the next animation
 
 #### Game:
+* H- Pauses the game
+* R- Restarts the game
 
 
 ### Sources:
@@ -22,3 +23,4 @@ Free pictures from: [https://pixabay.com/photos/search/](https://pixabay.com/pho
 [Solar fun facts](https://www.energy.gov/articles/top-6-things-you-didnt-know-about-solar-energy#:~:text=Solar%20energy%20is%20the%20most,by%20Bell%20Laboratories%20in%201954.)
 [Wind fun facts](https://www.opusenergy.com/blog/13-little-known-facts-about-wind-energy/)
 [Hydroelectric fun facts](https://www.energy.gov/articles/top-10-things-you-didnt-know-about-hydropower)
+[Renewabler energy cartoon splash screen](https://www.nationalgeographic.org/activity/right-balance-mixing-energy-resources/)

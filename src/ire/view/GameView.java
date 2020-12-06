@@ -12,6 +12,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -66,8 +68,14 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       topText.setFont(DEFAULT_FONT_TITLE);
       topText.setFill(Color.CORAL);
       BorderPane.setAlignment(topText, Pos.TOP_CENTER);
+      ImageView renewableEnergyPicture = new ImageView(new Image("renewableEnergy.jpg"));
+      BorderPane.setAlignment(renewableEnergyPicture, Pos.BOTTOM_CENTER);
+      renewableEnergyPicture.setFitHeight(400);
+      renewableEnergyPicture.setFitWidth(400);
+      renewableEnergyPicture.setX(Main.DEFAULT_SIZE.width/2.0-200);
+      renewableEnergyPicture.setY(200);
       BorderPane displayLayout = new BorderPane(null, topText,
-          buttonsMaintainer.createEnergyOptions(), null, getGameDescription());
+          buttonsMaintainer.createEnergyOptions(), renewableEnergyPicture, getGameDescription());
       return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
           displayLayout));
     } catch (MissingResourceException e) {
