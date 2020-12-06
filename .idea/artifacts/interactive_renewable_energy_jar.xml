@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="interactive-renewable-energy:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/interactive_renewable_energy_jar</output-path>
+    <root id="archive" name="interactive-renewable-energy.jar">
+      <element id="module-output" name="interactive-renewable-energy" />
+    </root>
+  </artifact>
+</component>

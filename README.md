@@ -1,7 +1,14 @@
 # interactive-renewable-energy
 Code created as part of the HackDuke hackathon. Creates an interactive way of learning about renewable energy designed for younger children. 
 
-### Running:
+### Running
+####  Instructions
+NOTE: This readme is a work in progress along with this project
+0. Download OpenJDK **full** package [here](https://bell-sw.com/pages/downloads/#/java-14-current). Download OpenJFX [here](https://openjfx.io/). 
+1. Clone the git repository at [github.com/gllewellyn19/interactive-renewable-energy](https://github.com/gllewellyn19/interactive-renewable-energy)
+2. Open your terminal and navigate into the cloned repository
+3. Run `cd out/artifacts/interactive_renewable_energy_jar`
+4. Run the command: `java -jar interactive-renewable-energy.jar`
 
 ### Cheat codes:
 #### General: 
