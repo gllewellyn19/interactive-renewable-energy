@@ -29,6 +29,7 @@ public class WindGame extends Game {
   private static final int[] SCORES_TO_LEVEL_UP = {30, 60, 100};
   private static final int[] WIND_MILL_SPEEDS = {-100, -150, -200};
   private static final int MAX_NUM_LEVELS = 3;
+  private static final int DEFAULT_BIRD_STEP = 20;
 
   private Circle bird;
   private List<Rectangle> turbines = new ArrayList<>();
@@ -51,12 +52,17 @@ public class WindGame extends Game {
   @Override
   public void handleKeyInput(KeyCode code) {
     super.handleKeyInput(code);
-      if (code == KeyCode.W) {
-        bird.setCenterY(bird.getCenterY() - 20);
+    if (code == KeyCode.W) {
+      if (bird.getCenterY() - bird.getRadius() - DEFAULT_BIRD_STEP >= 0) {
+        bird.setCenterY(bird.getCenterY() - DEFAULT_BIRD_STEP);
       }
-      if (code == KeyCode.Z) {
-        bird.setCenterY(bird.getCenterY() + 20);
+    }
+    if (code == KeyCode.Z) {
+      if (bird.getCenterY() + bird.getRadius() + DEFAULT_BIRD_STEP <= super.getSceneControls()
+          .getSceneHeight()) {
+        bird.setCenterY(bird.getCenterY() + DEFAULT_BIRD_STEP);
       }
+    }
   }
 
   @Override

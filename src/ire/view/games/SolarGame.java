@@ -27,8 +27,9 @@ public class SolarGame extends Game {
   private static final String LIVES_INDICATOR = "Lives: ";
   private static final String LEVEL_INDICATOR = "Level: ";
   private static final int[] SCORES_TO_LEVEL_UP = {30, 60, 100};
-  private static final int[] SUN_SPEEDS = {100, 150, 200};
+  private static final int[] SUN_SPEEDS = {60, 100, 150};
   private static final int MAX_NUM_LEVELS = 3;
+  private static final int DEFAULT_PANEL_STEP = 20;
 
   private Rectangle panel;
   private List<Circle> suns = new ArrayList<>();
@@ -52,12 +53,17 @@ public class SolarGame extends Game {
   @Override
   public void handleKeyInput(KeyCode code) {
     super.handleKeyInput(code);
-      if (code == KeyCode.A) {
-        panel.setX(panel.getX() - 20);
+    if (code == KeyCode.A) {
+      if (panel.getX() - DEFAULT_PANEL_STEP >= 0) {
+        panel.setX(panel.getX() - DEFAULT_PANEL_STEP);
       }
-      if (code == KeyCode.S) {
-        panel.setX(panel.getX() + 20);
+    }
+    if (code == KeyCode.S) {
+      if (panel.getX() + panel.getWidth() + DEFAULT_PANEL_STEP <= super.getSceneControls()
+          .getSceneWidth()) {
+        panel.setX(panel.getX() + DEFAULT_PANEL_STEP);
       }
+    }
   }
 
   @Override
