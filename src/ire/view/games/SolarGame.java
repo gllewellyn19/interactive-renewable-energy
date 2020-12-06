@@ -23,33 +23,28 @@ public class SolarGame extends Game {
 
   private static final int NEW_SUN_COUNT = 50;
   private static final String FILE_PATH = "solarGame/";
-  private static final String SCORE_INDICATOR = "Score: ";
-  private static final String LIVES_INDICATOR = "Lives: ";
-  private static final String LEVEL_INDICATOR = "Level: ";
-  private static final int[] SCORES_TO_LEVEL_UP = {30, 60, 100};
+  private static final int[] SCORES_TO_LEVEL_UP = {50, 90, 150};
   private static final int[] SUN_SPEEDS = {60, 100, 150};
-  private static final int MAX_NUM_LEVELS = 3;
+  private static final int MAX_LEVEL = 3;
   private static final int DEFAULT_PANEL_STEP = 20;
+  private static final int DEFAULT_STARTING_LIVES = 3;
 
   private Rectangle panel;
   private List<Circle> suns = new ArrayList<>();
   private List<Double> xDirection;
   private List<Double> yDirection;
-  private boolean paused;
-  private final ResourceBundle languageResources;
   private int sunCount;
   private final Random rand;
   private int lives;
-  private int score;
-  private int level;
-  private Text gameInfoDisplay;
 
   public SolarGame(ResourceBundle languageResources, SceneControls sceneControls) {
-    super(sceneControls);
-    this.languageResources = languageResources;
+    super(sceneControls, languageResources);
     rand = new Random();
   }
 
+  /*
+   * Allows the user to move the panel
+   */
   @Override
   public void handleKeyInput(KeyCode code) {
     super.handleKeyInput(code);
@@ -71,24 +66,20 @@ public class SolarGame extends Game {
     return null;
   }
 
+  /*
+   * Starts the game by setting up all the shapes and pictures and unpauses the game
+   */
   @Override
   public void startGame() {
     super.getSceneControls().getRoot().get().getChildren().clear();
+    lives = DEFAULT_STARTING_LIVES;
+    super.startGame();
     sunCount = 0;
-    paused = true;
-
     xDirection = new ArrayList<>();
     xDirection.add(rand.nextDouble());
     yDirection = new ArrayList<>();
     suns = new ArrayList<>();
     yDirection.add(.80);
-    lives = 3;
-    score = 0;
-    level = 1;
-    gameInfoDisplay = new Text(createTextDisplay());
-    gameInfoDisplay.setX(Main.DEFAULT_SIZE.width - 100);
-    gameInfoDisplay.setY(50);
-    gameInfoDisplay.setFont(new Font(24));
 
     Circle sun = new Circle(100, 10, 20);
     Image img1 = new Image(FILE_PATH+"sun.png");
@@ -100,24 +91,31 @@ public class SolarGame extends Game {
     if (super.getSceneControls().getRoot().isPresent()) {
       super.getSceneControls().getRoot().get().getChildren().add(sun);
       super.getSceneControls().getRoot().get().getChildren().add(panel);
-      super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
-              super.getSceneControls()).getCurrInteractiveFeature());
-      super.getSceneControls().getRoot().get().getChildren().add(gameInfoDisplay);
-
+      super.unPause();
     }
-    paused = false;
   }
 
+  /*
+   * Steps through the game- called every second or so by main
+   */
   @Override
   public void stepGame(double elapsedTime) {
-    if (!paused) {
+    if (!super.isPaused()) {
       updateSuns(elapsedTime);
       sunCount += 1;
       checkForNewSun();
-      updateGameDisplay();
+      updateGameDisplay(SCORES_TO_LEVEL_UP, MAX_LEVEL, "Solar");
     }
   }
 
+  @Override
+  protected int getLives() {
+    return lives;
+  }
+
+  /*
+   * Adds a new sun if it's time
+   */
   private void checkForNewSun() {
     if(sunCount == NEW_SUN_COUNT){
       Circle sun = new Circle(rand.nextInt((int)super.getSceneControls().getSceneWidth()), 10, 20);
@@ -133,16 +131,19 @@ public class SolarGame extends Game {
     }
   }
 
+  /*
+   * Changes the locations of the suns if necessary
+   */
   private void updateSuns(double elapsedTime){
-    if (!paused) {
+    if (!super.isPaused()) {
       for (int i = 0; i < suns.size(); i++) {
         Circle sun = suns.get(i);
-        double newBallX = sun.getCenterX() + xDirection.get(i) * SUN_SPEEDS[level-1] * elapsedTime;
-        double newBallY = sun.getCenterY() + yDirection.get(i) * SUN_SPEEDS[level-1] * elapsedTime;
+        double newBallX = sun.getCenterX() + xDirection.get(i) * SUN_SPEEDS[super.getLevel()-1] * elapsedTime;
+        double newBallY = sun.getCenterY() + yDirection.get(i) * SUN_SPEEDS[super.getLevel()-1] * elapsedTime;
         sun.setCenterX(newBallX);
         sun.setCenterY(newBallY);
         if (sun.intersects(panel.getLayoutBounds())) {
-          score += 10;
+          super.increaseScore(10);
           removeSunFromRoot(sun);
           xDirection.remove(i);
           suns.remove(sun);
@@ -165,45 +166,9 @@ public class SolarGame extends Game {
     if (super.getSceneControls().getRoot().isPresent()) {
       try {
         super.getSceneControls().getRoot().get().getChildren().remove(sun);
-      } catch (IllegalArgumentException e) {
-        //nothing happens
+      } catch (IllegalArgumentException ignored) {
       }
     }
   }
 
-  /*
-   * Updates the display of the game information to reflect a change in the lives, score, and level.
-   * Also tells the user if they have won or lost the game
-   */
-  private void updateGameDisplay() {
-    if (lives == 0) {
-      showGameWinningOrLosingMessage("gameLosingMessageSolar");
-    }
-    if (score >= SCORES_TO_LEVEL_UP[level-1]) {
-      level ++;
-      if (level > MAX_NUM_LEVELS) {
-        showGameWinningOrLosingMessage("gameWinningMessageSolar");
-      }
-    }
-    gameInfoDisplay.setText(createTextDisplay());
-  }
-
-  /*
-   * Pauses the game and tells the user that they won or lost
-   */
-  private void showGameWinningOrLosingMessage(String gameMessageKey) {
-    paused = true;
-    Text gameMessage = new Text(languageResources.getString(gameMessageKey));
-    gameMessage.setX(Main.DEFAULT_SIZE.width/2.0-200);
-    gameMessage.setY(Main.DEFAULT_SIZE.height/2.0);
-    super.getSceneControls().getRoot().get().getChildren().add(gameMessage);
-  }
-
-  /*
-   * Creates the text for the display board to show the score, lives and level.
-   */
-  private String createTextDisplay() {
-    return SCORE_INDICATOR + score + "\n" + LIVES_INDICATOR + lives + "\n" + LEVEL_INDICATOR
-        + level;
-  }
 }

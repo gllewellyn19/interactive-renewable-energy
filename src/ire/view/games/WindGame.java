@@ -23,29 +23,21 @@ public class WindGame extends Game {
 
   private static final int NEW_TURBINE = 40;
   private static final String FILE_PATH = "windGame/";
-  private static final String SCORE_INDICATOR = "Score: ";
-  private static final String LIVES_INDICATOR = "Lives: ";
-  private static final String LEVEL_INDICATOR = "Level: ";
   private static final int[] SCORES_TO_LEVEL_UP = {30, 60, 100};
   private static final int[] WIND_MILL_SPEEDS = {-100, -150, -200};
-  private static final int MAX_NUM_LEVELS = 3;
+  private static final int MAX_LEVEL = 3;
   private static final int DEFAULT_BIRD_STEP = 20;
+  private static final int DEFAULT_STARTING_LIVES = 3;
 
   private Circle bird;
   private List<Rectangle> turbines = new ArrayList<>();
   private double xDirection;
-  private boolean paused;
-  private final ResourceBundle languageResources;
   private int winMillCount;
   private Random rand;
   private int lives;
-  private int score;
-  private int level;
-  private Text gameInfoDisplay;
 
   public WindGame(ResourceBundle languageResources, SceneControls sceneControls) {
-    super(sceneControls);
-    this.languageResources = languageResources;
+    super(sceneControls, languageResources);
     rand = new Random();
   }
 
@@ -70,21 +62,16 @@ public class WindGame extends Game {
     return null;
   }
 
+  /*
+   * Starts the game by setting up all the shapes and pictures and unpauses the game
+   */
   @Override
   public void startGame() {
     super.getSceneControls().getRoot().get().getChildren().clear();
+    lives = DEFAULT_STARTING_LIVES;
+    super.startGame();
     winMillCount = 0;
-    paused = true;
     xDirection = .80;
-    lives = 3;
-    score = 0;
-    lives = 3;
-    score = 0;
-    level = 1;
-    gameInfoDisplay = new Text(createTextDisplay());
-    gameInfoDisplay.setX(Main.DEFAULT_SIZE.width - 100);
-    gameInfoDisplay.setY(50);
-    gameInfoDisplay.setFont(new Font(24));
 
     double height = rand.nextDouble()*.7*super.getSceneControls().getSceneHeight();
     Rectangle turbine = new Rectangle(super.getSceneControls().getSceneWidth(),0,100, height);
@@ -97,23 +84,31 @@ public class WindGame extends Game {
     if (super.getSceneControls().getRoot().isPresent()) {
       super.getSceneControls().getRoot().get().getChildren().add(turbine);
       super.getSceneControls().getRoot().get().getChildren().add(bird);
-      super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
-              super.getSceneControls()).getCurrInteractiveFeature());
-      super.getSceneControls().getRoot().get().getChildren().add(gameInfoDisplay);
+      super.unPause();
     }
-    paused = false;
   }
 
+  /*
+   * Steps through the game- called every second or so by main
+   */
   @Override
   public void stepGame(double elapsedTime) {
-    if (!paused) {
+    if (!super.isPaused()) {
       updateTurbines(elapsedTime);
       winMillCount += 1;
     }
     checkForNewTurbine();
-    updateGameDisplay();
+    super.updateGameDisplay(SCORES_TO_LEVEL_UP, MAX_LEVEL, "Wind");
   }
 
+  @Override
+  protected int getLives() {
+    return lives;
+  }
+
+  /*
+   * Adds a new turbine if it's time
+   */
   private void checkForNewTurbine() {
     if(winMillCount == NEW_TURBINE){
       double spot = rand.nextDouble();
@@ -133,17 +128,20 @@ public class WindGame extends Game {
     }
   }
 
+  /*
+   * Creates the graphic of the turbines moving across the screen at the correct speed
+   */
   private void updateTurbines(double elapsedTime){
     for(int i = 0; i< turbines.size(); i++){
       Rectangle turbine = turbines.get(i);
-      double newTurbineX = turbine.getX() + xDirection * WIND_MILL_SPEEDS[level-1] * elapsedTime;
+      double newTurbineX = turbine.getX() + xDirection * WIND_MILL_SPEEDS[super.getLevel()-1] * elapsedTime;
       turbine.setX(newTurbineX);
       if(turbine.intersects(bird.getLayoutBounds())){
         lives -= 1;
         removeTurbineFromRoot(turbine);
         turbines.remove(turbine);
       } else if (turbine.getX() < bird.getCenterX() - bird.getRadius()) {
-        score += 10;
+        super.increaseScore(10);
         removeTurbineFromRoot(turbine);
         turbines.remove(turbine);
       }
@@ -159,39 +157,4 @@ public class WindGame extends Game {
     }
   }
 
-  /*
-   * Updates the display of the game information to reflect a change in the lives, score, and level.
-   * Also tells the user if they have won or lost the game
-   */
-  private void updateGameDisplay() {
-    if (lives == 0) {
-      showGameWinningOrLosingMessage("gameLosingMessageWind");
-    }
-    if (score >= SCORES_TO_LEVEL_UP[level-1]) {
-      level ++;
-      if (level > MAX_NUM_LEVELS) {
-        showGameWinningOrLosingMessage("gameWinningMessageWind");
-      }
-    }
-    gameInfoDisplay.setText(createTextDisplay());
-  }
-
-  /*
-   * Pauses the game and tells the user that they won or lost
-   */
-  private void showGameWinningOrLosingMessage(String gameMessageKey) {
-    paused = true;
-    Text gameMessage = new Text(languageResources.getString(gameMessageKey));
-    gameMessage.setX(Main.DEFAULT_SIZE.width/2.0-200);
-    gameMessage.setY(Main.DEFAULT_SIZE.height/2.0);
-    super.getSceneControls().getRoot().get().getChildren().add(gameMessage);
-  }
-
-  /*
-   * Creates the text for the display board to show the score, lives and level.
-   */
-  private String createTextDisplay() {
-    return SCORE_INDICATOR + score + "\n" + LIVES_INDICATOR + lives + "\n" + LEVEL_INDICATOR
-        + level;
-  }
 }

@@ -86,8 +86,6 @@ public class Main extends Application implements SceneControls {
    *
    * @param code cheat key passed in that can have different meanings
    */
-  //FIXME: Cams for some reason this is not catching when arrows are pressed so you can either try
-  // to figure it out or just not use arrows
   private void handleKeyInput(KeyCode code) {
     if (gameView.getCurrentRenewableEnergyType()!=null) {
       gameView.getCurrentRenewableEnergyType().handleKeyInput(code);
