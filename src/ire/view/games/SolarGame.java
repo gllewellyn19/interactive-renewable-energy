@@ -162,6 +162,10 @@ public class SolarGame extends Game {
     }
   }
 
+  /*
+   * Removes sun from the root when they have passed the end which means they are no longer
+   * visible
+   */
   private void removeSunFromRoot(Circle sun) {
     if (super.getSceneControls().getRoot().isPresent()) {
       try {
@@ -169,6 +173,11 @@ public class SolarGame extends Game {
       } catch (IllegalArgumentException ignored) {
       }
     }
+  }
+
+  @Override
+  protected int getPointsToNextLevel() {
+    return SCORES_TO_LEVEL_UP[super.getLevel()-1] - super.getScore();
   }
 
 }

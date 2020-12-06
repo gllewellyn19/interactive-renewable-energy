@@ -128,7 +128,12 @@ public class HydroGame extends Game {
         return lives;
     }
 
-  /*
+    @Override
+    protected int getPointsToNextLevel() {
+        return SCORES_TO_LEVEL_UP[super.getLevel()-1] - super.getScore();
+    }
+
+    /*
    * Returns true if the fish was hit by the turbine
    */
   private boolean fishInBoundsTurbine() {
