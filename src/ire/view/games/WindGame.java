@@ -43,11 +43,13 @@ public class WindGame extends Game {
   public void handleKeyInput(KeyCode code) {
     super.handleKeyInput(code);
     if (code == KeyCode.W) {
+      unPauseIfPaused();
       if (bird.getCenterY() - bird.getRadius() - DEFAULT_BIRD_STEP >= 0) {
         bird.setCenterY(bird.getCenterY() - DEFAULT_BIRD_STEP);
       }
     }
     if (code == KeyCode.Z) {
+      unPauseIfPaused();
       if (bird.getCenterY() + bird.getRadius() + DEFAULT_BIRD_STEP <= super.getSceneControls()
           .getSceneHeight()) {
         bird.setCenterY(bird.getCenterY() + DEFAULT_BIRD_STEP);

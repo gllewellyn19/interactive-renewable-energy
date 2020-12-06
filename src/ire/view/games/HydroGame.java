@@ -42,19 +42,21 @@ public class HydroGame extends Game {
    */
   @Override
   public void handleKeyInput(KeyCode code) {
-          super.handleKeyInput(code);
-          if (code == KeyCode.A) {
-              if (turbine.getX() - DEFAULT_TURBINE_STEP >= 0) {
-                  turbine.setX(turbine.getX() - DEFAULT_TURBINE_STEP);
-              }
-          }
-          if (code == KeyCode.S) {
-              if (turbine.getX() + turbine.getWidth() + DEFAULT_TURBINE_STEP <= super
-                  .getSceneControls()
-                  .getSceneWidth()) {
-                  turbine.setX(turbine.getX() + DEFAULT_TURBINE_STEP);
-              }
-          }
+    super.handleKeyInput(code);
+    if (code == KeyCode.A) {
+      unPauseIfPaused();
+      if (turbine.getX() - DEFAULT_TURBINE_STEP >= 0) {
+        turbine.setX(turbine.getX() - DEFAULT_TURBINE_STEP);
+      }
+    }
+    if (code == KeyCode.S) {
+      unPauseIfPaused();
+      if (turbine.getX() + turbine.getWidth() + DEFAULT_TURBINE_STEP <= super
+          .getSceneControls()
+          .getSceneWidth()) {
+        turbine.setX(turbine.getX() + DEFAULT_TURBINE_STEP);
+      }
+    }
   }
 
   @Override
@@ -62,14 +64,14 @@ public class HydroGame extends Game {
     return FILE_PATH;
   }
 
-    /*
-     * Starts the game by setting up all the shapes and pictures and unpauses the game
-     */
+  /*
+   * Starts the game by setting up all the shapes and pictures and unpauses the game
+   */
   @Override
   public void startGame() {
-      super.getSceneControls().getRoot().get().getChildren().clear();
-      lives = DEFAULT_STARTING_LIVES;
-      super.startGame();
+    super.getSceneControls().getRoot().get().getChildren().clear();
+    lives = DEFAULT_STARTING_LIVES;
+    super.startGame();
 
     turbine = new Rectangle(Main.DEFAULT_SIZE.width / 2.0, Main.DEFAULT_SIZE.width - 200, 200, 200);
     turbine.setFill(new ImagePattern(new Image(FILE_PATH + "propeller.png")));
@@ -92,13 +94,13 @@ public class HydroGame extends Game {
     }
   }
 
-    /*
-     * Steps through the game- called every second or so by main
-     */
+  /*
+   * Steps through the game- called every second or so by main
+   */
   @Override
   public void stepGame(double elapsedTime) {
     if (!super.isPaused()) {
-      double newFishY = fish.getY() + FISH_SPEED[super.getLevel()-1] * elapsedTime;
+      double newFishY = fish.getY() + FISH_SPEED[super.getLevel() - 1] * elapsedTime;
       fish.setY(newFishY);
       checkFishHitDam();
       updateGameDisplay(SCORES_TO_LEVEL_UP);
@@ -113,9 +115,8 @@ public class HydroGame extends Game {
     if (fish.getY() + fish.getHeight() >= DAM_START_Y) {
       if (!fishInBoundsTurbine()) {
         super.increaseScore(INC_SCORE_BY);
-      }
-      else {
-          lives--;
+      } else {
+        lives--;
       }
       resetFish();
     }
@@ -126,14 +127,14 @@ public class HydroGame extends Game {
     fish.setY(10);
   }
 
-    @Override
-    protected int getLives() {
-        return lives;
-    }
+  @Override
+  protected int getLives() {
+    return lives;
+  }
 
   @Override
   protected int getPointsToNextLevel() {
-    if (super.getLevel()-1 <SCORES_TO_LEVEL_UP.length) {
+    if (super.getLevel() - 1 < SCORES_TO_LEVEL_UP.length) {
       return SCORES_TO_LEVEL_UP[super.getLevel() - 1] - super.getScore();
     } else {
       return 0;

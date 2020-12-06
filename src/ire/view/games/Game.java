@@ -181,4 +181,10 @@ public abstract class Game {
   protected abstract int getMaxLevel();
 
   protected abstract String getEnergyType();
+
+  protected void unPauseIfPaused() {
+    if (isPaused()) {
+      pause = false;
+    }
+  }
 }

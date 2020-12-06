@@ -42,11 +42,13 @@ public class SolarGame extends Game {
   public void handleKeyInput(KeyCode code) {
     super.handleKeyInput(code);
     if (code == KeyCode.A) {
+      unPauseIfPaused();
       if (panel.getX() - DEFAULT_PANEL_STEP >= 0) {
         panel.setX(panel.getX() - DEFAULT_PANEL_STEP);
       }
     }
     if (code == KeyCode.S) {
+      unPauseIfPaused();
       if (panel.getX() + panel.getWidth() + DEFAULT_PANEL_STEP <= super.getSceneControls()
           .getSceneWidth()) {
         panel.setX(panel.getX() + DEFAULT_PANEL_STEP);

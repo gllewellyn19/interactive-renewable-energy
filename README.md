@@ -11,7 +11,7 @@ Code created as part of the HackDuke hackathon. Creates an interactive way of le
 * N- takes you to the next animation
 
 #### Game:
-* H- Pauses the game
+* H- Pauses/ unpauses the game. If the user tries to move their piece, the game will unpause.
 * R- Restarts the game
 * L- skips to the next level
 
