@@ -25,7 +25,7 @@ public class HydroGame extends Game {
   private static final String FILE_PATH = "hydroGame/";
   private static final int DEFAULT_STARTING_LIVES = 3;
   private static final int MAX_NUM_LEVEL = 3;
-  private static final int[] SCORES_TO_LEVEL_UP = {10, 20, 30};//{50, 80, 120};
+  private static final int[] SCORES_TO_LEVEL_UP = {50, 80, 120};
   private static final int[] FISH_SPEED = {100, 150, 200};
 
   private Rectangle turbine;
@@ -58,8 +58,8 @@ public class HydroGame extends Game {
   }
 
   @Override
-  public Node getGamePicture() {
-    return null;
+  public String getFilePath() {
+    return FILE_PATH;
   }
 
     /*
@@ -75,7 +75,7 @@ public class HydroGame extends Game {
     turbine.setFill(new ImagePattern(new Image(FILE_PATH + "propeller.png")));
     fish = new Rectangle(Math.random() * ((Main.DEFAULT_SIZE.width - 75) + 1),
         10, 75, 75);
-    fish.setFill(new ImagePattern(new Image(FILE_PATH + "fish.jpg")));
+    fish.setFill(new ImagePattern(new Image(FILE_PATH + "fish.png")));
 
     if (super.getSceneControls().getRoot().isPresent()) {
       super.getSceneControls().getRoot().get().getChildren().add(fish);

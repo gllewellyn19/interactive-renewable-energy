@@ -42,7 +42,17 @@ public abstract class Game {
     }
   }
 
-  public abstract Node getGamePicture();
+  /*
+   * Returns a screen shot of the game to show the user
+   */
+  public Node getGamePicture() {
+    ImageView gameScreenShot = new ImageView(new Image(getFilePath()+"screenshotGame.png"));
+    gameScreenShot.setFitWidth(500);
+    gameScreenShot.setFitHeight(500);
+    return gameScreenShot;
+  }
+
+  public abstract String getFilePath();
 
   /**
    * Starts the game- either through a restart or the user presses the start game button on the

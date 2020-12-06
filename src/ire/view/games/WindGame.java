@@ -9,21 +9,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import ire.view.buttons.BackButton;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class WindGame extends Game {
 
   private static final int NEW_TURBINE = 40;
   private static final String FILE_PATH = "windGame/";
-  private static final int[] SCORES_TO_LEVEL_UP = {10, 20, 30};//{30, 60, 100};
+  private static final int[] SCORES_TO_LEVEL_UP = {30, 60, 100};
   private static final int[] WIND_MILL_SPEEDS = {-100, -150, -200};
   private static final int MAX_LEVEL = 3;
   private static final int DEFAULT_BIRD_STEP = 20;
@@ -58,8 +55,8 @@ public class WindGame extends Game {
   }
 
   @Override
-  public Node getGamePicture() {
-    return null;
+  public String getFilePath() {
+    return FILE_PATH;
   }
 
   /*
