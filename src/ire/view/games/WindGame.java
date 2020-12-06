@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 public class WindGame extends Game {
 
   private static final int NEW_TURBINE = 40;
+  private static final String FILE_PATH = "windGame/";
 
   private Circle bird;
   private List<Rectangle> turbines = new ArrayList<>();
@@ -57,10 +58,10 @@ public class WindGame extends Game {
   @Override
   public void handleKeyInput(KeyCode code) {
     if (super.getSceneControls().getGameStatus() == GameStatus.GAME) {
-      if (code == KeyCode.A) {
+      if (code == KeyCode.W) {
         bird.setCenterY(bird.getCenterY() - 20);
       }
-      if (code == KeyCode.S) {
+      if (code == KeyCode.Z) {
         bird.setCenterY(bird.getCenterY() + 20);
       }
     }
@@ -75,11 +76,11 @@ public class WindGame extends Game {
   public void startGame() {
     double height = rand.nextDouble()*.7*super.getSceneControls().getSceneHeight();
     Rectangle turbine = new Rectangle(super.getSceneControls().getSceneWidth(),0,100, height);
-    Image img1 = new Image("/games/turbine.png");
+    Image img1 = new Image(FILE_PATH+"turbine.png");
     turbine.setFill(new ImagePattern(img1));
     turbines.add(turbine);
     bird = new Circle(50, super.getSceneControls().getSceneHeight()/2, 50);
-    Image img2 = new Image("/games/bird.png");
+    Image img2 = new Image(FILE_PATH+"bird.png");
     bird.setFill(new ImagePattern(img2));
     if (super.getSceneControls().getRoot().isPresent()) {
       super.getSceneControls().getRoot().get().getChildren().add(turbine);
@@ -117,7 +118,7 @@ public class WindGame extends Game {
         start = super.getSceneControls().getSceneHeight()-height;
       }
       Rectangle turbine = new Rectangle(super.getSceneControls().getSceneWidth(),start, 100, height);
-      Image img1 = new Image("/games/turbine.png");
+      Image img1 = new Image(FILE_PATH+"turbine.png");
       turbine.setFill(new ImagePattern(img1));
       turbines.add(turbine);
       if (super.getSceneControls().getRoot().isPresent()) {

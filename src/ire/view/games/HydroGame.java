@@ -24,6 +24,7 @@ public class HydroGame extends Game {
     public static final int DAM_START_Y = Main.DEFAULT_SIZE.width - 200;
     public static final int INC_SCORE_BY = 10;
     public static final String SCORE_INDICATOR = "Score: ";
+    private static final String FILE_PATH = "hydroGame/";
 
     private Rectangle turbine;
     private final ResourceBundle languageResources;
@@ -57,9 +58,9 @@ public class HydroGame extends Game {
     @Override
     public void startGame() {
         turbine = new Rectangle(Main.DEFAULT_SIZE.width/2.0, Main.DEFAULT_SIZE.width-200, 200, 200);
-        turbine.setFill(new ImagePattern(new Image("hydroGame/turbine.jpg")));
+        turbine.setFill(new ImagePattern(new Image(FILE_PATH+"propeller.png")));
         fish = new Rectangle(Main.DEFAULT_SIZE.width/2.0, 10, 75, 75);
-        fish.setFill(new ImagePattern(new Image("hydroGame/fish.jpg")));
+        fish.setFill(new ImagePattern(new Image(FILE_PATH+"fish.jpg")));
         scoreDisplay = new Text(SCORE_INDICATOR + "0");
         scoreDisplay.setX(Main.DEFAULT_SIZE.width-100);
         scoreDisplay.setY(50);
@@ -70,7 +71,7 @@ public class HydroGame extends Game {
                     super.getSceneControls()).getCurrInteractiveFeature());
             super.getSceneControls().getRoot().get().getChildren().add(scoreDisplay);
             ImageView damImageView = new ImageView();
-            Image damImage = new Image("hydroGame/dam.jpg");
+            Image damImage = new Image(FILE_PATH+"dam.jpg");
             damImageView.setImage(damImage);
             damImageView.setFitHeight(200);
             damImageView.setFitWidth(Main.DEFAULT_SIZE.width);
@@ -96,7 +97,6 @@ public class HydroGame extends Game {
      * If the fish did not hit the turbine then increases the score
      */
     private void checkFishHitDam() {
-        System.out.println("fish y is "+fish.getY() +" and dam start is "+DAM_START_Y);
         if (fish.getY() + fish.getHeight() >= DAM_START_Y) {
             if (!fishInBoundsTurbine()) {
                 score+=INC_SCORE_BY;

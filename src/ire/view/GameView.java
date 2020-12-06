@@ -1,7 +1,6 @@
 package ire.view;
 
 import ire.Main;
-import ire.view.energyTypes.ExampleGameView;
 import ire.view.energyTypes.HydroEnergyTypeView;
 import ire.view.energyTypes.RenewableEnergyType;
 import ire.view.energyTypes.SolarEnergyTypeView;
@@ -114,8 +113,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       topText.setFont(DEFAULT_FONT_TITLE);
       topText.setFill(Color.CORAL);
       BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.getGamePicture(),
-          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame(
-              currentRenewableEnergyType.getEnergyType()));
+          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame());
       return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
           displayLayout));
     } catch (MissingResourceException e) {
@@ -214,13 +212,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
     } else if (energyType.equals("hydro")) {
       currentRenewableEnergyType = new HydroEnergyTypeView(languageResources, sceneControls, errorPrinting);
       currentRenewableEnergyType.initializeEnergyType();
-    }
-    //FIXME: delete when this example is no longer needed cams
-    else if (energyType.equals("example")){
-      currentRenewableEnergyType = new ExampleGameView(languageResources, sceneControls);
-      currentRenewableEnergyType.initializeEnergyType();
-    }
-    else {
+    } else {
       errorPrinting.printErrorMessageAlert("energyTypeNotFound", energyType);
     }
   }
