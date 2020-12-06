@@ -21,9 +21,9 @@ public class HydroGame extends Game {
 
   private static final int NEW_SUN_COUNT = 50;
 
-  private Rectangle panel;
-  private List<Circle> suns = new ArrayList<>();
-  private List<Double> xDirection;
+  private Rectangle prop;
+  private List<Circle> fish = new ArrayList<>();
+  private double xDirection;
   private List<Double> yDirection;
   private int sunSpeed;
   private boolean paused;
@@ -42,10 +42,7 @@ public class HydroGame extends Game {
     paused = true;
     sunSpeed = 100;
     rand = new Random();
-    xDirection = new ArrayList<>();
-    xDirection.add(rand.nextDouble());
-    yDirection = new ArrayList<>();
-    yDirection.add(.80);
+    xDirection = .80;
     lives = 3;
     score = 0;
     scoreText = new Text();
@@ -62,10 +59,10 @@ public class HydroGame extends Game {
   public void handleKeyInput(KeyCode code) {
     if (super.getSceneControls().getGameStatus() == GameStatus.GAME) {
       if (code == KeyCode.A) {
-        panel.setX(panel.getX() - 20);
+        prop.setX(prop.getX() - 20);
       }
       if (code == KeyCode.S) {
-        panel.setX(panel.getX() + 20);
+        prop.setX(prop.getX() + 20);
       }
     }
   }
@@ -80,13 +77,13 @@ public class HydroGame extends Game {
     Circle sun = new Circle(100, 10, 20);
     Image img1 = new Image("/games/fish.png");
     sun.setFill(new ImagePattern(img1));
-    suns.add(sun);
-    panel = new Rectangle(super.getSceneControls().getSceneWidth() - 100, super.getSceneControls().getSceneHeight() - 100, 100, 10);
+    fish.add(sun);
+    prop = new Rectangle(super.getSceneControls().getSceneWidth() - 100, super.getSceneControls().getSceneHeight() - 100, 100, 10);
     Image img2 = new Image("/games/propellor.png");
-    panel.setFill(new ImagePattern(img2));
+    prop.setFill(new ImagePattern(img2));
     if (super.getSceneControls().getRoot().isPresent()) {
       super.getSceneControls().getRoot().get().getChildren().add(sun);
-      super.getSceneControls().getRoot().get().getChildren().add(panel);
+      super.getSceneControls().getRoot().get().getChildren().add(prop);
       super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
               super.getSceneControls()).getCurrInteractiveFeature());
       super.getSceneControls().getRoot().get().getChildren().add(scoreText);
@@ -116,7 +113,7 @@ public class HydroGame extends Game {
       Circle sun = new Circle(rand.nextInt((int)super.getSceneControls().getSceneWidth()), 10, 20);
       Image img1 = new Image("/games/sun.png");
       sun.setFill(new ImagePattern(img1));
-      suns.add(sun);
+      fish.add(sun);
       xDirection.add(rand.nextDouble());
       yDirection.add(yDirection.get(0));
       if (super.getSceneControls().getRoot().isPresent()) {
@@ -127,26 +124,26 @@ public class HydroGame extends Game {
   }
 
   private void updateSuns(double elapsedTime){
-    for(int i=0; i<suns.size(); i++){
-      Circle sun = suns.get(i);
+    for(int i = 0; i< fish.size(); i++){
+      Circle sun = fish.get(i);
       double newBallX = sun.getCenterX() + xDirection.get(i) * sunSpeed * elapsedTime;
       double newBallY = sun.getCenterY() + yDirection.get(i) * sunSpeed * elapsedTime;
       sun.setCenterX(newBallX);
       sun.setCenterY(newBallY);
-      if(sun.intersects(panel.getLayoutBounds())){
+      if(sun.intersects(prop.getLayoutBounds())){
         score += 10;
         removeSunFromRoot(sun);
         xDirection.remove(i);
-        suns.remove(sun);
+        fish.remove(sun);
       } else if (sun.getCenterX() > super.getSceneControls().getSceneWidth() || sun.getCenterX() <= 0) {
         double speed = xDirection.get(i);
         xDirection.remove(i);
         xDirection.add(i,speed*-1);
-      } else if (sun.getCenterY() > panel.getY() + panel.getHeight()) {
+      } else if (sun.getCenterY() > prop.getY() + prop.getHeight()) {
         lives -= 1;
         removeSunFromRoot(sun);
         xDirection.remove(i);
-        suns.remove(sun);
+        fish.remove(sun);
       }
     }
   }
