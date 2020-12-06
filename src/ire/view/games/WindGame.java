@@ -1,5 +1,6 @@
 package ire.view.games;
 
+import ire.Main;
 import ire.view.GameStatus;
 import ire.view.SceneControls;
 
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class WindGame extends Game {
@@ -24,19 +26,21 @@ public class WindGame extends Game {
   private static final String SCORE_INDICATOR = "Score: ";
   private static final String LIVES_INDICATOR = "Lives: ";
   private static final String LEVEL_INDICATOR = "Level: ";
+  private static final int[] SCORES_TO_LEVEL_UP = {30, 60, 100};
+  private static final int[] WIND_MILL_SPEEDS = {-100, -150, -200};
+  private static final int MAX_NUM_LEVELS = 3;
 
   private Circle bird;
   private List<Rectangle> turbines = new ArrayList<>();
   private double xDirection;
-  private int sunSpeed;
   private boolean paused;
   private final ResourceBundle languageResources;
-  private int sunCount;
+  private int winMillCount;
   private Random rand;
   private int lives;
   private int score;
-  private Text scoreText;
-  private Text livesText;
+  private int level;
+  private Text gameInfoDisplay;
 
   public WindGame(ResourceBundle languageResources, SceneControls sceneControls) {
     super(sceneControls);
@@ -63,20 +67,18 @@ public class WindGame extends Game {
   @Override
   public void startGame() {
     super.getSceneControls().getRoot().get().getChildren().clear();
-    sunCount = 0;
+    winMillCount = 0;
     paused = true;
-    sunSpeed = -150;
     xDirection = .80;
     lives = 3;
     score = 0;
-    scoreText = new Text();
-    scoreText.setX(10);
-    scoreText.setY(50);
-    scoreText.setText(SCORE_INDICATOR+score);
-    livesText = new Text();
-    livesText.setX(10);
-    livesText.setY(70);
-    livesText.setText(LIVES_INDICATOR+lives);
+    lives = 3;
+    score = 0;
+    level = 1;
+    gameInfoDisplay = new Text(createTextDisplay());
+    gameInfoDisplay.setX(Main.DEFAULT_SIZE.width - 100);
+    gameInfoDisplay.setY(50);
+    gameInfoDisplay.setFont(new Font(24));
 
     double height = rand.nextDouble()*.7*super.getSceneControls().getSceneHeight();
     Rectangle turbine = new Rectangle(super.getSceneControls().getSceneWidth(),0,100, height);
@@ -91,8 +93,7 @@ public class WindGame extends Game {
       super.getSceneControls().getRoot().get().getChildren().add(bird);
       super.getSceneControls().getRoot().get().getChildren().add(new BackButton(languageResources,
               super.getSceneControls()).getCurrInteractiveFeature());
-      super.getSceneControls().getRoot().get().getChildren().add(scoreText);
-      super.getSceneControls().getRoot().get().getChildren().add(livesText);
+      super.getSceneControls().getRoot().get().getChildren().add(gameInfoDisplay);
     }
     paused = false;
   }
@@ -101,20 +102,14 @@ public class WindGame extends Game {
   public void stepGame(double elapsedTime) {
     if (!paused) {
       updateTurbines(elapsedTime);
-      sunCount += 1;
+      winMillCount += 1;
     }
     checkForNewTurbine();
-    checkIfAlive();
-    updateTexts();
-  }
-
-  private void updateTexts(){
-    scoreText.setText(SCORE_INDICATOR+score);
-    livesText.setText(LIVES_INDICATOR+lives);
+    updateGameDisplay();
   }
 
   private void checkForNewTurbine() {
-    if(sunCount == NEW_TURBINE){
+    if(winMillCount == NEW_TURBINE){
       double spot = rand.nextDouble();
       double height = rand.nextDouble()*.7*super.getSceneControls().getSceneHeight();
       double start = 0;
@@ -128,14 +123,14 @@ public class WindGame extends Game {
       if (super.getSceneControls().getRoot().isPresent()) {
         super.getSceneControls().getRoot().get().getChildren().add(turbine);
       }
-      sunCount = 0;
+      winMillCount = 0;
     }
   }
 
   private void updateTurbines(double elapsedTime){
     for(int i = 0; i< turbines.size(); i++){
       Rectangle turbine = turbines.get(i);
-      double newTurbineX = turbine.getX() + xDirection * sunSpeed * elapsedTime;
+      double newTurbineX = turbine.getX() + xDirection * WIND_MILL_SPEEDS[level-1] * elapsedTime;
       turbine.setX(newTurbineX);
       if(turbine.intersects(bird.getLayoutBounds())){
         lives -= 1;
@@ -153,30 +148,44 @@ public class WindGame extends Game {
     if (super.getSceneControls().getRoot().isPresent()) {
       try {
         super.getSceneControls().getRoot().get().getChildren().remove(turbine);
-      } catch (IllegalArgumentException e) {
-        //nothing happens
+      } catch (IllegalArgumentException ignored) {
       }
     }
   }
 
-  private void checkIfAlive(){
-    if(lives == 0){
-      paused = true;
-      if (super.getSceneControls().getRoot().isPresent()) {
-        try{
-          super.getSceneControls().getRoot().get().getChildren().remove(scoreText);
-          super.getSceneControls().getRoot().get().getChildren().remove(livesText);
-        }
-        catch(IllegalArgumentException ignored){
-        }
-      }
-      Text loseText = new Text();
-      loseText.setText("You lose. Your score is: "+score);
-      loseText.setX(10);
-      loseText.setY(super.getSceneControls().getSceneHeight()/2);
-      if (super.getSceneControls().getRoot().isPresent()) {
-        super.getSceneControls().getRoot().get().getChildren().add(loseText);
+  /*
+   * Updates the display of the game information to reflect a change in the lives, score, and level.
+   * Also tells the user if they have won or lost the game
+   */
+  private void updateGameDisplay() {
+    if (lives == 0) {
+      showGameWinningOrLosingMessage("gameLosingMessageWind");
+    }
+    if (score >= SCORES_TO_LEVEL_UP[level-1]) {
+      level ++;
+      if (level > MAX_NUM_LEVELS) {
+        showGameWinningOrLosingMessage("gameWinningMessageWind");
       }
     }
+    gameInfoDisplay.setText(createTextDisplay());
+  }
+
+  /*
+   * Pauses the game and tells the user that they won or lost
+   */
+  private void showGameWinningOrLosingMessage(String gameMessageKey) {
+    paused = true;
+    Text gameMessage = new Text(languageResources.getString(gameMessageKey));
+    gameMessage.setX(Main.DEFAULT_SIZE.width/2.0-200);
+    gameMessage.setY(Main.DEFAULT_SIZE.height/2.0);
+    super.getSceneControls().getRoot().get().getChildren().add(gameMessage);
+  }
+
+  /*
+   * Creates the text for the display board to show the score, lives and level.
+   */
+  private String createTextDisplay() {
+    return SCORE_INDICATOR + score + "\n" + LIVES_INDICATOR + lives + "\n" + LEVEL_INDICATOR
+        + level;
   }
 }

@@ -37,11 +37,9 @@ public class SolarGame extends Game {
   private boolean paused;
   private final ResourceBundle languageResources;
   private int sunCount;
-  private Random rand;
+  private final Random rand;
   private int lives;
   private int score;
-  private Text scoreText;
-  private Text livesText;
   private int level;
   private Text gameInfoDisplay;
 
