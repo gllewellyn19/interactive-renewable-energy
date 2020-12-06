@@ -23,7 +23,7 @@ public class WindGame extends Game {
 
   private static final int NEW_TURBINE = 40;
   private static final String FILE_PATH = "windGame/";
-  private static final int[] SCORES_TO_LEVEL_UP = {30, 60, 100};
+  private static final int[] SCORES_TO_LEVEL_UP = {10, 20, 30};//{30, 60, 100};
   private static final int[] WIND_MILL_SPEEDS = {-100, -150, -200};
   private static final int MAX_LEVEL = 3;
   private static final int DEFAULT_BIRD_STEP = 20;
@@ -163,7 +163,11 @@ public class WindGame extends Game {
 
   @Override
   protected int getPointsToNextLevel() {
-    return SCORES_TO_LEVEL_UP[super.getLevel()-1] - super.getScore();
+    if (super.getLevel()-1 <SCORES_TO_LEVEL_UP.length) {
+      return SCORES_TO_LEVEL_UP[super.getLevel() - 1] - super.getScore();
+    } else {
+      return 0;
+    }
   }
 
 }

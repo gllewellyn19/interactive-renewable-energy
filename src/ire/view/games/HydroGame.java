@@ -25,7 +25,7 @@ public class HydroGame extends Game {
   private static final String FILE_PATH = "hydroGame/";
   private static final int DEFAULT_STARTING_LIVES = 3;
   private static final int MAX_NUM_LEVEL = 3;
-  private static final int[] SCORES_TO_LEVEL_UP = {50, 75, 100};
+  private static final int[] SCORES_TO_LEVEL_UP = {10, 20, 30};//{50, 80, 120};
   private static final int[] FISH_SPEED = {100, 150, 200};
 
   private Rectangle turbine;
@@ -128,10 +128,14 @@ public class HydroGame extends Game {
         return lives;
     }
 
-    @Override
-    protected int getPointsToNextLevel() {
-        return SCORES_TO_LEVEL_UP[super.getLevel()-1] - super.getScore();
+  @Override
+  protected int getPointsToNextLevel() {
+    if (super.getLevel()-1 <SCORES_TO_LEVEL_UP.length) {
+      return SCORES_TO_LEVEL_UP[super.getLevel() - 1] - super.getScore();
+    } else {
+      return 0;
     }
+  }
 
     /*
    * Returns true if the fish was hit by the turbine

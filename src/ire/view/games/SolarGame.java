@@ -23,7 +23,7 @@ public class SolarGame extends Game {
 
   private static final int NEW_SUN_COUNT = 50;
   private static final String FILE_PATH = "solarGame/";
-  private static final int[] SCORES_TO_LEVEL_UP = {50, 90, 150};
+  private static final int[] SCORES_TO_LEVEL_UP = {10, 20, 30};//{50, 90, 150};
   private static final int[] SUN_SPEEDS = {60, 100, 150};
   private static final int MAX_LEVEL = 3;
   private static final int DEFAULT_PANEL_STEP = 20;
@@ -177,7 +177,11 @@ public class SolarGame extends Game {
 
   @Override
   protected int getPointsToNextLevel() {
-    return SCORES_TO_LEVEL_UP[super.getLevel()-1] - super.getScore();
+    if (super.getLevel()-1 <SCORES_TO_LEVEL_UP.length) {
+      return SCORES_TO_LEVEL_UP[super.getLevel() - 1] - super.getScore();
+    } else {
+      return 0;
+    }
   }
 
 }

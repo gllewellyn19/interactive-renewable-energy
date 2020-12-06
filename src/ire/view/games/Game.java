@@ -33,7 +33,7 @@ public abstract class Game {
   }
 
   public void handleKeyInput(KeyCode code) {
-    if (code == KeyCode.P) {
+    if (code == KeyCode.R) {
       startGame();
     }
     if (code == KeyCode.H && !gameOver) {
@@ -56,9 +56,9 @@ public abstract class Game {
     gameInfoDisplay.setY(20);
     gameInfoDisplay.setFont(new Font(20));
     funFact = new Text();
-    funFact.setX(sceneControls.getSceneWidth()/2.0-100);
-    funFact.setY(sceneControls.getSceneHeight()/2.0);
-    funFact.setFont(new Font(48));
+    funFact.setX(90);
+    funFact.setY(sceneControls.getSceneHeight()/2.0 - 200);
+    funFact.setFont(new Font(30));
 
     if (sceneControls.getRoot().isPresent()) {
       sceneControls.getRoot().get().getChildren().add(new BackButton(languageResources,
@@ -120,12 +120,12 @@ public abstract class Game {
       showGameWinningOrLosingMessage("gameLosingMessage"+energyType);
     }
     if (score >= scoresToLevelUp[level-1]) {
-      if (level > maxLevel) {
+      if (level >= maxLevel) {
         showGameWinningOrLosingMessage("gameWinningMessage"+energyType);
       } else {
         showFunFact("funFact"+level+energyType);
+        level++;
       }
-      level++;
     }
     gameInfoDisplay.setText(createTextDisplay());
   }
