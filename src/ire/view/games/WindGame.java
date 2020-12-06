@@ -21,6 +21,9 @@ public class WindGame extends Game {
 
   private static final int NEW_TURBINE = 40;
   private static final String FILE_PATH = "windGame/";
+  private static final String SCORE_INDICATOR = "Score: ";
+  private static final String LIVES_INDICATOR = "Lives: ";
+  private static final String LEVEL_INDICATOR = "Level: ";
 
   private Circle bird;
   private List<Rectangle> turbines = new ArrayList<>();
@@ -38,33 +41,18 @@ public class WindGame extends Game {
   public WindGame(ResourceBundle languageResources, SceneControls sceneControls) {
     super(sceneControls);
     this.languageResources = languageResources;
-    sunCount = 0;
-    paused = true;
-    sunSpeed = -150;
     rand = new Random();
-    xDirection = .80;
-    lives = 3;
-    score = 0;
-    scoreText = new Text();
-    scoreText.setX(10);
-    scoreText.setY(50);
-    scoreText.setText("Score: "+score);
-    livesText = new Text();
-    livesText.setX(10);
-    livesText.setY(70);
-    livesText.setText("Lives: "+score);
   }
 
   @Override
   public void handleKeyInput(KeyCode code) {
-    if (super.getSceneControls().getGameStatus() == GameStatus.GAME) {
+    super.handleKeyInput(code);
       if (code == KeyCode.W) {
         bird.setCenterY(bird.getCenterY() - 20);
       }
       if (code == KeyCode.Z) {
         bird.setCenterY(bird.getCenterY() + 20);
       }
-    }
   }
 
   @Override
@@ -74,6 +62,22 @@ public class WindGame extends Game {
 
   @Override
   public void startGame() {
+    super.getSceneControls().getRoot().get().getChildren().clear();
+    sunCount = 0;
+    paused = true;
+    sunSpeed = -150;
+    xDirection = .80;
+    lives = 3;
+    score = 0;
+    scoreText = new Text();
+    scoreText.setX(10);
+    scoreText.setY(50);
+    scoreText.setText(SCORE_INDICATOR+score);
+    livesText = new Text();
+    livesText.setX(10);
+    livesText.setY(70);
+    livesText.setText(LIVES_INDICATOR+lives);
+
     double height = rand.nextDouble()*.7*super.getSceneControls().getSceneHeight();
     Rectangle turbine = new Rectangle(super.getSceneControls().getSceneWidth(),0,100, height);
     Image img1 = new Image(FILE_PATH+"turbine.png");
@@ -105,8 +109,8 @@ public class WindGame extends Game {
   }
 
   private void updateTexts(){
-    scoreText.setText("Score: "+score);
-    livesText.setText("Lives: "+lives);
+    scoreText.setText(SCORE_INDICATOR+score);
+    livesText.setText(LIVES_INDICATOR+lives);
   }
 
   private void checkForNewTurbine() {
@@ -163,8 +167,7 @@ public class WindGame extends Game {
           super.getSceneControls().getRoot().get().getChildren().remove(scoreText);
           super.getSceneControls().getRoot().get().getChildren().remove(livesText);
         }
-        catch(IllegalArgumentException e){
-          //do nothing
+        catch(IllegalArgumentException ignored){
         }
       }
       Text loseText = new Text();

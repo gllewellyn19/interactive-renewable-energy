@@ -22,24 +22,24 @@ public class HydroGame extends Game {
   public static final int DEFAULT_TURBINE_STEP = 10;
   public static final int DAM_START_Y = Main.DEFAULT_SIZE.width - 200;
   public static final int INC_SCORE_BY = 10;
-  public static final String SCORE_INDICATOR = "Score: ";
+  private static final String SCORE_INDICATOR = "Score: ";
   private static final String LIVES_INDICATOR = "Lives: ";
   private static final String LEVEL_INDICATOR = "Level: ";
   private static final String FILE_PATH = "hydroGame/";
   private static final int DEFAULT_STARTING_LIVES = 3;
   private static final int MAX_LEVEL = 3;
   private static final int[] SCORES_TO_LEVEL_UP = {50, 75, 100};
-  private static final int[] FISH_SPEED = {100, 125, 150};
+  private static final int[] FISH_SPEED = {100, 150, 200};
 
 
   private Rectangle turbine;
   private final ResourceBundle languageResources;
   private boolean paused = true;
   private Rectangle fish;
-  private int score = 0;
+  private int score;
   private Text gameInfoDisplay;
-  private int lives = DEFAULT_STARTING_LIVES;
-  private int level = 1;
+  private int lives;
+  private int level;
 
   public HydroGame(ResourceBundle languageResources, SceneControls sceneControls) {
     super(sceneControls);
@@ -52,7 +52,7 @@ public class HydroGame extends Game {
    */
   @Override
   public void handleKeyInput(KeyCode code) {
-    if (super.getSceneControls().getGameStatus() == GameStatus.GAME) {
+      super.handleKeyInput(code);
       if (code == KeyCode.A) {
           if (turbine.getX() - DEFAULT_TURBINE_STEP >= 0) {
               turbine.setX(turbine.getX() - DEFAULT_TURBINE_STEP);
@@ -64,7 +64,6 @@ public class HydroGame extends Game {
               turbine.setX(turbine.getX() + DEFAULT_TURBINE_STEP);
           }
       }
-    }
   }
 
   @Override
@@ -74,9 +73,14 @@ public class HydroGame extends Game {
 
   @Override
   public void startGame() {
+      score = 0;
+      lives = DEFAULT_STARTING_LIVES;
+      level = 1;
+      super.getSceneControls().getRoot().get().getChildren().clear();
     turbine = new Rectangle(Main.DEFAULT_SIZE.width / 2.0, Main.DEFAULT_SIZE.width - 200, 200, 200);
     turbine.setFill(new ImagePattern(new Image(FILE_PATH + "propeller.png")));
-    fish = new Rectangle(Main.DEFAULT_SIZE.width / 2.0, 10, 75, 75);
+    fish = new Rectangle(Math.random() * ((Main.DEFAULT_SIZE.width - fish.getWidth()) + 1),
+        10, 75, 75);
     fish.setFill(new ImagePattern(new Image(FILE_PATH + "fish.jpg")));
     gameInfoDisplay = new Text(createTextDisplay());
     gameInfoDisplay.setX(Main.DEFAULT_SIZE.width - 100);

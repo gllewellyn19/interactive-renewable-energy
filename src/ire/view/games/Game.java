@@ -12,18 +12,16 @@ public abstract class Game {
     this.sceneControls = sceneControls;
   }
 
-  public abstract void handleKeyInput(KeyCode code);
+  public void handleKeyInput(KeyCode code) {
+    if (code == KeyCode.P) {
+      startGame();
+    }
+  }
 
-  //FIXME: Cams if you want a picture to show up on the initial screen for the game then implement this
-  // method
   public abstract Node getGamePicture();
 
-  //FIXME: Cams implement this function to show how you want your game to initially look- this will
-  // be displayed in the middle of the screen- can use sceneControls to get the root to add shapes to
   public abstract void startGame();
 
-  //FIXME: Cams implement this function to step through your game- this is called every second or so
-  // but only when an active game is happening
   public abstract void stepGame(double elapsedTime);
 
   public SceneControls getSceneControls() {

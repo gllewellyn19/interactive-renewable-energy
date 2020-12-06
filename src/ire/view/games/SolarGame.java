@@ -21,6 +21,9 @@ public class SolarGame extends Game {
 
   private static final int NEW_SUN_COUNT = 50;
   private static final String FILE_PATH = "solarGame/";
+  private static final String SCORE_INDICATOR = "Score: ";
+  private static final String LIVES_INDICATOR = "Lives: ";
+  private static final String LEVEL_INDICATOR = "Level: ";
 
   private Rectangle panel;
   private List<Circle> suns = new ArrayList<>();
@@ -39,36 +42,18 @@ public class SolarGame extends Game {
   public SolarGame(ResourceBundle languageResources, SceneControls sceneControls) {
     super(sceneControls);
     this.languageResources = languageResources;
-    sunCount = 0;
-    paused = true;
-    sunSpeed = 100;
     rand = new Random();
-    xDirection = new ArrayList<>();
-    xDirection.add(rand.nextDouble());
-    yDirection = new ArrayList<>();
-    yDirection.add(.80);
-    lives = 3;
-    score = 0;
-    scoreText = new Text();
-    scoreText.setX(10);
-    scoreText.setY(50);
-    scoreText.setText("Score: "+score);
-    livesText = new Text();
-    livesText.setX(10);
-    livesText.setY(70);
-    livesText.setText("Lives: "+score);
   }
 
   @Override
   public void handleKeyInput(KeyCode code) {
-    if (super.getSceneControls().getGameStatus() == GameStatus.GAME) {
+    super.handleKeyInput(code);
       if (code == KeyCode.A) {
         panel.setX(panel.getX() - 20);
       }
       if (code == KeyCode.S) {
         panel.setX(panel.getX() + 20);
       }
-    }
   }
 
   @Override
@@ -78,6 +63,27 @@ public class SolarGame extends Game {
 
   @Override
   public void startGame() {
+    super.getSceneControls().getRoot().get().getChildren().clear();
+    sunCount = 0;
+    paused = true;
+    sunSpeed = 100;
+
+    xDirection = new ArrayList<>();
+    xDirection.add(rand.nextDouble());
+    yDirection = new ArrayList<>();
+    suns = new ArrayList<>();
+    yDirection.add(.80);
+    lives = 3;
+    score = 0;
+    scoreText = new Text();
+    scoreText.setX(10);
+    scoreText.setY(50);
+    scoreText.setText(SCORE_INDICATOR+score);
+    livesText = new Text();
+    livesText.setX(10);
+    livesText.setY(70);
+    livesText.setText(LIVES_INDICATOR+lives);
+
     Circle sun = new Circle(100, 10, 20);
     Image img1 = new Image(FILE_PATH+"sun.png");
     sun.setFill(new ImagePattern(img1));
@@ -108,8 +114,8 @@ public class SolarGame extends Game {
   }
 
   private void updateTexts(){
-    scoreText.setText("Score: "+score);
-    livesText.setText("Lives: "+lives);
+    scoreText.setText(SCORE_INDICATOR+score);
+    livesText.setText(LIVES_INDICATOR+lives);
   }
 
   private void checkForNewSun() {
@@ -128,26 +134,29 @@ public class SolarGame extends Game {
   }
 
   private void updateSuns(double elapsedTime){
-    for(int i=0; i<suns.size(); i++){
-      Circle sun = suns.get(i);
-      double newBallX = sun.getCenterX() + xDirection.get(i) * sunSpeed * elapsedTime;
-      double newBallY = sun.getCenterY() + yDirection.get(i) * sunSpeed * elapsedTime;
-      sun.setCenterX(newBallX);
-      sun.setCenterY(newBallY);
-      if(sun.intersects(panel.getLayoutBounds())){
-        score += 10;
-        removeSunFromRoot(sun);
-        xDirection.remove(i);
-        suns.remove(sun);
-      } else if (sun.getCenterX() > super.getSceneControls().getSceneWidth() || sun.getCenterX() <= 0) {
-        double speed = xDirection.get(i);
-        xDirection.remove(i);
-        xDirection.add(i,speed*-1);
-      } else if (sun.getCenterY() > panel.getY() + panel.getHeight()) {
-        lives -= 1;
-        removeSunFromRoot(sun);
-        xDirection.remove(i);
-        suns.remove(sun);
+    if (!paused) {
+      for (int i = 0; i < suns.size(); i++) {
+        Circle sun = suns.get(i);
+        double newBallX = sun.getCenterX() + xDirection.get(i) * sunSpeed * elapsedTime;
+        double newBallY = sun.getCenterY() + yDirection.get(i) * sunSpeed * elapsedTime;
+        sun.setCenterX(newBallX);
+        sun.setCenterY(newBallY);
+        if (sun.intersects(panel.getLayoutBounds())) {
+          score += 10;
+          removeSunFromRoot(sun);
+          xDirection.remove(i);
+          suns.remove(sun);
+        } else if (sun.getCenterX() > super.getSceneControls().getSceneWidth()
+            || sun.getCenterX() <= 0) {
+          double speed = xDirection.get(i);
+          xDirection.remove(i);
+          xDirection.add(i, speed * -1);
+        } else if (sun.getCenterY() > panel.getY() + panel.getHeight()) {
+          lives -= 1;
+          removeSunFromRoot(sun);
+          xDirection.remove(i);
+          suns.remove(sun);
+        }
       }
     }
   }
