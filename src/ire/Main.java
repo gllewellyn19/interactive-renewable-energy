@@ -1,6 +1,5 @@
 package ire;
 
-import ire.model.GamePlay;
 import ire.view.GameStatus;
 import ire.view.GameView;
 import ire.view.SceneControls;
@@ -27,9 +26,6 @@ public class Main extends Application implements SceneControls {
   private Stage stage;
   private Scene scene;
   private GameView gameView;
-  private GamePlay gamePlay;
-  private Timeline animation; //FIXME: Cams if you ever want to change the animation rate use:
-  // animation.setRate(Math.pow(animation.getCurrentRate(),modifyingRate));
   private GameStatus gameStatus = GameStatus.NEITHER;
   private Optional<Group> root = Optional.empty();
 
@@ -44,7 +40,6 @@ public class Main extends Application implements SceneControls {
   @Override
   public void start(Stage stage) {
     gameView = new GameView(this);
-    gamePlay = new GamePlay();
     Optional<Scene> startingScene = gameView.makeAnInitialScene(DEFAULT_SIZE.width,
         DEFAULT_SIZE.height);
     if (startingScene.isPresent()) {
@@ -55,7 +50,7 @@ public class Main extends Application implements SceneControls {
       stage.show();
       this.stage = stage;
       KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
-      animation = new Timeline();
+      Timeline animation = new Timeline();
       animation.setCycleCount(Timeline.INDEFINITE);
       animation.getKeyFrames().add(frame);
       animation.play();
@@ -91,8 +86,6 @@ public class Main extends Application implements SceneControls {
    *
    * @param code cheat key passed in that can have different meanings
    */
-  //FIXME: Cams for some reason this is not catching when arrows are pressed so you can either try
-  // to figure it out or just not use arrows
   private void handleKeyInput(KeyCode code) {
     if (gameView.getCurrentRenewableEnergyType()!=null) {
       gameView.getCurrentRenewableEnergyType().handleKeyInput(code);

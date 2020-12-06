@@ -1,7 +1,6 @@
 package ire.view;
 
 import ire.Main;
-import ire.view.energyTypes.ExampleGameView;
 import ire.view.energyTypes.HydroEnergyTypeView;
 import ire.view.energyTypes.RenewableEnergyType;
 import ire.view.energyTypes.SolarEnergyTypeView;
@@ -9,8 +8,12 @@ import ire.view.energyTypes.WindEnergyTypeView;
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -64,9 +67,15 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       Text topText = new Text(topTextContent);
       topText.setFont(DEFAULT_FONT_TITLE);
       topText.setFill(Color.CORAL);
-      //BorderPane.setAlignment(topText, Pos.TOP_CENTER);
-      BorderPane displayLayout = new BorderPane(getGameDescription(), topText,
-          null, null, buttonsMaintainer.createEnergyOptions());
+      BorderPane.setAlignment(topText, Pos.TOP_CENTER);
+      ImageView renewableEnergyPicture = new ImageView(new Image("renewableEnergy.jpg"));
+      BorderPane.setAlignment(renewableEnergyPicture, Pos.BOTTOM_CENTER);
+      renewableEnergyPicture.setFitHeight(400);
+      renewableEnergyPicture.setFitWidth(400);
+      renewableEnergyPicture.setX(Main.DEFAULT_SIZE.width/2.0-200);
+      renewableEnergyPicture.setY(200);
+      BorderPane displayLayout = new BorderPane(null, topText,
+          buttonsMaintainer.createEnergyOptions(), renewableEnergyPicture, getGameDescription());
       return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
           displayLayout));
     } catch (MissingResourceException e) {
@@ -114,8 +123,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       topText.setFont(DEFAULT_FONT_TITLE);
       topText.setFill(Color.CORAL);
       BorderPane displayLayout = new BorderPane(currentRenewableEnergyType.getGamePicture(),
-          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame(
-              currentRenewableEnergyType.getEnergyType()));
+          topText, null, null, buttonsMaintainer.createOptionsEnergyTypeGame());
       return Optional.of(uploadCSSFile(width, height, STARTING_STYLESHEET,
           displayLayout));
     } catch (MissingResourceException e) {
@@ -152,7 +160,6 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
    * Returns a description of the game to make the center of the starting screen
    */
   private Text getGameDescription() {
-    //initialInputBoxes.setAlignment(Pos.TOP_CENTER);
     String textContent = languageResources.getString("gameExplanation");
     Text description = new Text(textContent);
     description.setFont(DEFAULT_FONT_DESCRIPTION);
@@ -169,24 +176,6 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
    */
   public Scene uploadCSSFile(double width, double height, String cssFile, BorderPane displayLayout) {
     Scene scene = new Scene(displayLayout, width, height, DEFAULT_BACKGROUND);
-    try {
-      scene.getStylesheets()
-          .add(getClass().getResource(Main.DEFAULT_RESOURCE_FOLDER +
-              STYLESHEETS_FOLDER + cssFile).toExternalForm());
-    } catch (NullPointerException e) {
-      errorPrinting.printErrorMessageAlert("CSSNotFound", cssFile);
-    }
-    return scene;
-  }
-
-  /**
-   * @param width   - width of returned scene
-   * @param height  - height of returned scene
-   * @param cssFile - string with name of wanted css file
-   * @return - scene with a new style sheet- uses a root not a BorderPane
-   */
-  public Scene uploadCSSFileGame(double width, double height, String cssFile, Group root) {
-    Scene scene = new Scene(root, width, height, DEFAULT_BACKGROUND);
     try {
       scene.getStylesheets()
           .add(getClass().getResource(Main.DEFAULT_RESOURCE_FOLDER +
@@ -214,13 +203,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
     } else if (energyType.equals("hydro")) {
       currentRenewableEnergyType = new HydroEnergyTypeView(languageResources, sceneControls, errorPrinting);
       currentRenewableEnergyType.initializeEnergyType();
-    }
-    //FIXME: delete when this example is no longer needed cams
-    else if (energyType.equals("example")){
-      currentRenewableEnergyType = new ExampleGameView(languageResources, sceneControls);
-      currentRenewableEnergyType.initializeEnergyType();
-    }
-    else {
+    } else {
       errorPrinting.printErrorMessageAlert("energyTypeNotFound", energyType);
     }
   }
