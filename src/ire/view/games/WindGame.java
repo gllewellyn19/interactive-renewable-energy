@@ -175,6 +175,7 @@ public class WindGame extends Game {
     for (Rectangle turbine: turbines) {
       removeTurbineFromRoot(turbine);
     }
+    turbines.clear();
   }
 
   protected int getMaxLevel() {

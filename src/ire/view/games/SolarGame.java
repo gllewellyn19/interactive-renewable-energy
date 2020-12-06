@@ -80,7 +80,8 @@ public class SolarGame extends Game {
     Image img1 = new Image(FILE_PATH+"sun.png");
     sun.setFill(new ImagePattern(img1));
     suns.add(sun);
-    panel = new Rectangle(super.getSceneControls().getSceneWidth() - 100, super.getSceneControls().getSceneHeight() - 100, 100, 10);
+    panel = new Rectangle(super.getSceneControls().getSceneWidth()/2.0 - 75,
+        super.getSceneControls().getSceneHeight() - 100, 150, 30);
     Image img2 = new Image(FILE_PATH+"solar_panel.png");
     panel.setFill(new ImagePattern(img2));
     if (super.getSceneControls().getRoot().isPresent()) {
@@ -118,7 +119,7 @@ public class SolarGame extends Game {
       sun.setFill(new ImagePattern(img1));
       suns.add(sun);
       xDirection.add(rand.nextDouble());
-      yDirection.add(yDirection.get(0));
+      yDirection.add(1.0);
       if (super.getSceneControls().getRoot().isPresent()) {
         super.getSceneControls().getRoot().get().getChildren().add(sun);
       }
@@ -184,6 +185,9 @@ public class SolarGame extends Game {
     for (Circle sun: suns) {
       removeSunFromRoot(sun);
     }
+    suns.clear();
+    xDirection.clear();
+    yDirection.clear();
   }
 
   protected int getMaxLevel() {

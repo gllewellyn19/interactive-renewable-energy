@@ -26,7 +26,7 @@ public class HydroGame extends Game {
   private static final int DEFAULT_STARTING_LIVES = 3;
   private static final int MAX_NUM_LEVEL = 3;
   private static final int[] SCORES_TO_LEVEL_UP = {50, 80, 120};
-  private static final int[] FISH_SPEED = {100, 150, 200};
+  private static final int[] FISH_SPEED = {70, 100, 150};
 
   private Rectangle turbine;
   private Rectangle fish;
