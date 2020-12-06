@@ -13,6 +13,7 @@ Code created as part of the HackDuke hackathon. Creates an interactive way of le
 #### Game:
 * H- Pauses the game
 * R- Restarts the game
+* L- skips to the next level
 
 
 ### Sources:

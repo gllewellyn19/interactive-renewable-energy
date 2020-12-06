@@ -97,7 +97,7 @@ public class SolarGame extends Game {
       updateSuns(elapsedTime);
       sunCount += 1;
       checkForNewSun();
-      updateGameDisplay(SCORES_TO_LEVEL_UP, MAX_LEVEL, "Solar");
+      updateGameDisplay(SCORES_TO_LEVEL_UP);
     }
   }
 
@@ -175,6 +175,21 @@ public class SolarGame extends Game {
     } else {
       return 0;
     }
+  }
+
+  @Override
+  protected void restartObstacles() {
+    for (Circle sun: suns) {
+      removeSunFromRoot(sun);
+    }
+  }
+
+  protected int getMaxLevel() {
+    return MAX_LEVEL;
+  }
+
+  protected String getEnergyType() {
+    return "Solar";
   }
 
 }

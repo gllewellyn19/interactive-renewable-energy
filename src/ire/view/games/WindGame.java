@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import org.w3c.dom.css.Rect;
 
 public class WindGame extends Game {
 
@@ -95,7 +96,7 @@ public class WindGame extends Game {
       winMillCount += 1;
     }
     checkForNewTurbine();
-    super.updateGameDisplay(SCORES_TO_LEVEL_UP, MAX_LEVEL, "Wind");
+    super.updateGameDisplay(SCORES_TO_LEVEL_UP);
   }
 
   @Override
@@ -165,6 +166,21 @@ public class WindGame extends Game {
     } else {
       return 0;
     }
+  }
+
+  @Override
+  protected void restartObstacles() {
+    for (Rectangle turbine: turbines) {
+      removeTurbineFromRoot(turbine);
+    }
+  }
+
+  protected int getMaxLevel() {
+    return MAX_LEVEL;
+  }
+
+  protected String getEnergyType() {
+    return "Wind";
   }
 
 }

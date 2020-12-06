@@ -101,7 +101,7 @@ public class HydroGame extends Game {
       double newFishY = fish.getY() + FISH_SPEED[super.getLevel()-1] * elapsedTime;
       fish.setY(newFishY);
       checkFishHitDam();
-      updateGameDisplay(SCORES_TO_LEVEL_UP, MAX_NUM_LEVEL, "Hydro");
+      updateGameDisplay(SCORES_TO_LEVEL_UP);
     }
   }
 
@@ -117,10 +117,13 @@ public class HydroGame extends Game {
       else {
           lives--;
       }
-      //reset the fish
-      fish.setX(Math.random() * ((Main.DEFAULT_SIZE.width - fish.getWidth()) + 1));
-      fish.setY(10);
+      resetFish();
     }
+  }
+
+  private void resetFish() {
+    fish.setX(Math.random() * ((Main.DEFAULT_SIZE.width - fish.getWidth()) + 1));
+    fish.setY(10);
   }
 
     @Override
@@ -137,7 +140,12 @@ public class HydroGame extends Game {
     }
   }
 
-    /*
+  @Override
+  protected void restartObstacles() {
+    resetFish();
+  }
+
+  /*
    * Returns true if the fish was hit by the turbine
    */
   private boolean fishInBoundsTurbine() {
@@ -145,6 +153,14 @@ public class HydroGame extends Game {
         ||
         ((fish.getX() + fish.getWidth()) >= turbine.getX() && (fish.getX() + fish.getWidth()) <=
             (turbine.getX() + turbine.getWidth()));
+  }
+
+  protected int getMaxLevel() {
+    return MAX_NUM_LEVEL;
+  }
+
+  protected String getEnergyType() {
+    return "Hydro";
   }
 
 

@@ -32,13 +32,19 @@ public abstract class Game {
     this.languageResources = languageResources;
   }
 
+  /*
+   * Manages the different cheat keys for the game
+   */
   public void handleKeyInput(KeyCode code) {
     if (code == KeyCode.R) {
       startGame();
     }
-    if (code == KeyCode.H && !gameOver) {
+    else if (code == KeyCode.H && !gameOver) {
       funFact.setText("");
       pause = !pause;
+    }
+    else if (code == KeyCode.L && !gameOver) {
+      moveToNextLevel();
     }
   }
 
@@ -59,6 +65,7 @@ public abstract class Game {
    * general energy screen
    */
   public void startGame() {
+    gameOver = false;
     level = 1;
     score = 0;
     gameInfoDisplay = new Text(createTextDisplay());
@@ -125,17 +132,12 @@ public abstract class Game {
    * Updates the display of the game information to reflect a change in the lives, score, and level.
    * Also tells the user if they have won or lost the game
    */
-  protected void updateGameDisplay(int[] scoresToLevelUp, int maxLevel, String energyType) {
+  protected void updateGameDisplay(int[] scoresToLevelUp) {
     if (getLives() == 0) {
-      showGameWinningOrLosingMessage("gameLosingMessage"+energyType);
+      showGameWinningOrLosingMessage("gameLosingMessage"+getEnergyType());
     }
     if (score >= scoresToLevelUp[level-1]) {
-      if (level >= maxLevel) {
-        showGameWinningOrLosingMessage("gameWinningMessage"+energyType);
-      } else {
-        showFunFact("funFact"+level+energyType);
-        level++;
-      }
+      moveToNextLevel();
     }
     gameInfoDisplay.setText(createTextDisplay());
   }
@@ -155,4 +157,28 @@ public abstract class Game {
     pause = true;
     funFact.setText(languageResources.getString(funFactKey));
   }
+
+  /*
+   * Skips to the next level or the end of the game. This happens when the user presses a cheat key
+   */
+  private void moveToNextLevel() {
+    if (level >= getMaxLevel()) {
+      showGameWinningOrLosingMessage("gameWinningMessage"+getEnergyType());
+    } else {
+      showFunFact("funFact"+level+getEnergyType());
+      level++;
+      restartObstacles();
+    }
+    gameInfoDisplay.setText(createTextDisplay());
+  }
+
+  /*
+   * Called when the user wants to change the level- removes the obstacles or places them back at
+   * the start
+   */
+  protected abstract void restartObstacles();
+
+  protected abstract int getMaxLevel();
+
+  protected abstract String getEnergyType();
 }
