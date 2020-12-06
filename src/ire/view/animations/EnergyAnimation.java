@@ -13,7 +13,8 @@ public abstract class EnergyAnimation implements Animationable{
 
   private final ResourceBundle languageResources;
   private final SceneControls sceneControls;
-  private int getCurrentAnimation;
+  private int currentAnimation = 0;
+  private ButtonBase nextButton;
 
   public EnergyAnimation(ResourceBundle languageResources, SceneControls sceneControls) {
     this.languageResources = languageResources;
@@ -24,17 +25,7 @@ public abstract class EnergyAnimation implements Animationable{
    * Starts the animation by displaying the necessary buttons
    */
   public void startAnimation() {
-    if (sceneControls.getRoot().isPresent()) {
-      ButtonBase backButton = new BackButton(languageResources, sceneControls).getCurrButton();
-      backButton.setLayoutX(0);
-      backButton.setLayoutY(0);
-      sceneControls.getRoot().get().getChildren().add(backButton);
-      ButtonBase nextButton = new NextButton(languageResources, this).
-          getCurrButton();
-      nextButton.setLayoutX(128);
-      nextButton.setLayoutY(0);
-      sceneControls.getRoot().get().getChildren().add(nextButton);
-    }
+    addButtons();
   }
 
   /**
@@ -56,7 +47,40 @@ public abstract class EnergyAnimation implements Animationable{
   @Override
   public abstract void stepToNextAnimation();
 
-  public SceneControls getSceneControls() {
+  protected SceneControls getSceneControls() {
     return sceneControls;
+  }
+
+  protected ResourceBundle getLanguageResources() {
+    return languageResources;
+  }
+
+  protected int getCurrentAnimation() {
+    return currentAnimation;
+  }
+
+  protected void incrementCurrentAnimation(){
+    currentAnimation++;
+  }
+
+  protected void disableNextButton() {
+    nextButton.setDisable(true);
+  }
+
+  /*
+   * Adds the next and back buttons to the animation
+   */
+  protected void addButtons() {
+    if (sceneControls.getRoot().isPresent()) {
+      ButtonBase backButton = new BackButton(languageResources, sceneControls).getCurrButton();
+      backButton.setLayoutX(0);
+      backButton.setLayoutY(0);
+      sceneControls.getRoot().get().getChildren().add(backButton);
+      nextButton = new NextButton(languageResources, this).
+          getCurrButton();
+      nextButton.setLayoutX(128);
+      nextButton.setLayoutY(0);
+      sceneControls.getRoot().get().getChildren().add(nextButton);
+    }
   }
 }

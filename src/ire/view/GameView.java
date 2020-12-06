@@ -212,7 +212,7 @@ public class GameView implements LanguageControls, StartEnergyTypeable {
       currentRenewableEnergyType = new WindEnergyTypeView(languageResources, sceneControls);
       currentRenewableEnergyType.initializeEnergyType();
     } else if (energyType.equals("hydro")) {
-      currentRenewableEnergyType = new HydroEnergyTypeView(languageResources, sceneControls);
+      currentRenewableEnergyType = new HydroEnergyTypeView(languageResources, sceneControls, errorPrinting);
       currentRenewableEnergyType.initializeEnergyType();
     }
     //FIXME: delete when this example is no longer needed cams
