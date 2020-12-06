@@ -22,7 +22,7 @@ public class Main extends Application implements SceneControls {
   public static final Dimension DEFAULT_SIZE = new Dimension(800, 800);
   public static final String DEFAULT_TITLE = "Interactive Renewable Energy";
   public static final String DEFAULT_RESOURCES_PACKAGE = RESOURCES.replace("/", ".");
-  public static final double SECOND_DELAY = 1;
+  public static final double SECOND_DELAY = .1;
 
   private Stage stage;
   private Scene scene;
