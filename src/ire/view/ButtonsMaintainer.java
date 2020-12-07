@@ -17,9 +17,15 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class creates and maintains all the buttons for the class and has methods that returns nodes
+ * of certain buttons at the appropriate times
+ *
+ * @author Grace Llewellyn
+ */
 public class ButtonsMaintainer {
 
-  private Map<String, BoardInteractiveFeature> buttons;
+  private final Map<String, BoardInteractiveFeature> buttons;
 
   public ButtonsMaintainer(ResourceBundle languageResources, StartEnergyTypeable startEnergyTypeable,
       SceneControls sceneControls, ErrorPrintable errorPrintable) {

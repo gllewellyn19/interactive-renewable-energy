@@ -4,6 +4,11 @@ import ire.view.SceneControls;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+/**
+ * This button takes the user to the game screen where they can start the game
+ *
+ * @author Grace Llewellyn
+ */
 public class GoToGameButton extends BoardButton {
 
   private SceneControls sceneControls;

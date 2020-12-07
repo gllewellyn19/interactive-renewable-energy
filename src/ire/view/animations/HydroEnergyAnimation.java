@@ -4,6 +4,12 @@ import ire.view.ErrorPrintable;
 import ire.view.SceneControls;
 import java.util.ResourceBundle;
 
+/**
+ * This class creates the animation of hydropower in a step by step model with pictures and
+ * descriptions.
+ *
+ * @author Grace Llewellyn
+ */
 public class HydroEnergyAnimation extends EnergyAnimation {
 
   public static final String ANIMATION_FILE_PATH = "hydroAnimation/";

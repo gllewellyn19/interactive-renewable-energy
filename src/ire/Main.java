@@ -14,6 +14,12 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * This class creates all parts of the project and handles the part of the project that is concerned
+ * with being an application such as setting the stage/ scene/ root. 
+ *
+ * @author Grace Llewellyn
+ */
 public class Main extends Application implements SceneControls {
 
   public static final String RESOURCES = "resources/";

@@ -9,8 +9,6 @@ import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +18,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * This class manages all of the basics for how the view of the game is presented and gives a lot
+ * of its responsibility to classes that it has an instance of
+ *
+ * @author Grace Llewellyn
+ */
 public class GameView implements LanguageControls, StartEnergyTypeable {
 
   public static final String LANGUAGE_FOLDER = "languages/";

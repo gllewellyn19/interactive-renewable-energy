@@ -4,6 +4,12 @@ import ire.view.SceneControls;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+/**
+ * This button takes the user back to the splash screen. Pressing the B key has the same effect
+ * as this button
+ *
+ * @author Grace Llewellyn
+ */
 public class BackButton extends BoardButton{
 
   private final SceneControls sceneControls;

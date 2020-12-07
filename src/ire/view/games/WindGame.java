@@ -1,22 +1,24 @@
 package ire.view.games;
 
-import ire.Main;
-import ire.view.GameStatus;
 import ire.view.SceneControls;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import org.w3c.dom.css.Rect;
 
+
+/**
+ * This class provides presents the wind energy game. This game is played by the user moving a bird
+ * to avoid the oncoming wind mills. There are various levels that increase in difficulty and the user
+ * has a limited number of lives.
+ *
+ * @author Cameron Jarnot and Grace Llewellyn
+ */
 public class WindGame extends Game {
 
   private static final int NEW_TURBINE = 40;

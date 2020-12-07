@@ -1,6 +1,5 @@
 package ire.view.games;
 
-import ire.Main;
 import ire.view.SceneControls;
 import ire.view.buttons.BackButton;
 import java.util.ResourceBundle;
@@ -11,6 +10,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * This abstract class provides a template for the games in this project. The subclasses can
+ * override any of this functionality if they differ from these methods.
+ *
+ * @author Grace Llewellyn
+ */
 public abstract class Game {
 
   private static final String SCORE_INDICATOR = "Score: ";

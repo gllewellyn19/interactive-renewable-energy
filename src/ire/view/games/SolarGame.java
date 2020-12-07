@@ -5,13 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * This class provides presents the solar power game. This game is played by the user moving a panel
+ * to catch the oncoming suns. There are various levels that increase in difficulty and the user
+ * has a limited number of lives.
+ *
+ * @author Cameron Jarnot and Grace Llewellyn
+ */
 public class SolarGame extends Game {
 
   private static final int NEW_SUN_COUNT = 50;

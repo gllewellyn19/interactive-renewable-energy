@@ -10,9 +10,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
+/**
+ * This abstract class provides a template for the different types of renewable energy in the game
+ *
+ * @author Grace Llewellyn
+ */
 public abstract class RenewableEnergyType {
 
-  //public static final String IMAGE_PATH = new File("");
   public static final String IMAGE_EXTENSION = ".jpg";
 
   private final String energyType;

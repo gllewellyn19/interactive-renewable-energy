@@ -1,6 +1,12 @@
 # interactive-renewable-energy
 Code created as part of the HackDuke hackathon. Creates an interactive way of learning about renewable energy designed for younger children. 
 
+![Screenshot of Hydro game](data/hydroGame/screenshotGame.png)
+
+![Screenshot of Solar game](data/solarGame/screenshotGame.png)
+
+![Screenshot of Wind game](data/windGame/screenshotGame.png)
+
 ### Running
 ####  Instructions
 NOTE: This readme is a work in progress along with this project

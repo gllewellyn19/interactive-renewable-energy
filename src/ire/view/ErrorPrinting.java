@@ -6,6 +6,12 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * This class helps divide the responsibility of gameView to better follow single responsibility
+ * principle and does the error printing for the game
+ *
+ * @author Grace Llewellyn
+ */
 public class ErrorPrinting implements ErrorPrintable{
 
   public static final String DEFAULT_MESSAGE_MISSING_EXCEPTIONS = "The file for resources exceptions"

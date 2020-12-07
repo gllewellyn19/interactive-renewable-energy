@@ -5,6 +5,11 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBase;
 
+/**
+ * This abstract class is implemented by all clickable buttons in the learning experience
+ *
+ * @author Grace Llewellyn
+ */
 public abstract class BoardButton extends BoardInteractiveFeature{
 
   private final ButtonBase currButton;

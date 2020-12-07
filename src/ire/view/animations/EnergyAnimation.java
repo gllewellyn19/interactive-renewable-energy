@@ -13,6 +13,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * This abstract class is the template for any animations that are added to the learning experience.
+ *
+ * @author Grace Llewellyn
+ */
 public abstract class EnergyAnimation implements Animationable{
 
   private final ResourceBundle languageResources;

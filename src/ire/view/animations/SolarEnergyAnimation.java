@@ -4,6 +4,12 @@ import ire.view.ErrorPrintable;
 import ire.view.SceneControls;
 import java.util.ResourceBundle;
 
+/**
+ * This class creates the animation of solar energy in a step by step model with pictures and
+ * descriptions.
+ *
+ * @author Grace Llewellyn
+ */
 public class SolarEnergyAnimation extends EnergyAnimation {
 
   public static final String ANIMATION_FILE_PATH = "solarAnimation/";

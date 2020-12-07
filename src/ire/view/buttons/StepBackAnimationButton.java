@@ -4,6 +4,11 @@ import ire.view.animations.Animationable;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+/**
+ * This button lets the user step back one step in the animation
+ *
+ * @author Grace Llewellyn
+ */
 public class StepBackAnimationButton extends BoardButton {
 
   private final Animationable animationable;

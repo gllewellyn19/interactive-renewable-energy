@@ -5,6 +5,11 @@ import ire.view.SceneControls;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+/**
+ * This button launches an unpaused game for the user
+ *
+ * @author Grace Llewellyn
+ */
 public class StartGameButton extends BoardButton {
 
   private final SceneControls sceneControls;

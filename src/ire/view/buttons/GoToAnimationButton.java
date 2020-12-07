@@ -4,9 +4,14 @@ import ire.view.SceneControls;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+/**
+ * This button takes the user to the animation screen where they can start the animation from
+ *
+ * @author Grace Llewellyn
+ */
 public class GoToAnimationButton extends BoardButton {
 
-  private SceneControls sceneControls;
+  private final SceneControls sceneControls;
 
   public GoToAnimationButton(ResourceBundle resources, SceneControls sceneControls) {
     super(resources, new Button(), "GoToAnimationButton");
