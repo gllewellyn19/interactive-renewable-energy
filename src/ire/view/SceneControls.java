@@ -2,8 +2,13 @@ package ire.view;
 
 import java.util.Optional;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 
+/**
+ * This class allows other classes like the game to interact with components of the main such as
+ * its root
+ *
+ * @author Grace Llewellyn
+ */
 public interface SceneControls {
 
   void createGeneralEnergyTypeScene();

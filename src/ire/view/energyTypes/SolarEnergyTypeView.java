@@ -5,9 +5,12 @@ import ire.view.SceneControls;
 import ire.view.animations.SolarEnergyAnimation;
 import ire.view.games.SolarGame;
 import java.util.ResourceBundle;
-import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
 
+/**
+ * This class presents solar power as a general energy option
+ *
+ * @author Grace Llewellyn
+ */
 public class SolarEnergyTypeView extends RenewableEnergyType {
 
   public SolarEnergyTypeView(ResourceBundle languageResources, SceneControls sceneControls,

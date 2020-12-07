@@ -1,22 +1,21 @@
 package ire.view.games;
 
 import ire.Main;
-import ire.view.GameStatus;
 import ire.view.SceneControls;
-import ire.view.buttons.BackButton;
-import java.util.Random;
 import java.util.ResourceBundle;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
+/**
+ * This class provides presents the hydropower game. This game is played by the user moving a turbine
+ * to avoid the oncoming fish. There are various levels that increase in difficulty and the user
+ * has a limited number of lives.
+ *
+ * @author Grace Llewellyn
+ */
 public class HydroGame extends Game {
 
   public static final int DEFAULT_TURBINE_STEP = 10;

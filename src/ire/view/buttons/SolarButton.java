@@ -4,6 +4,12 @@ import ire.view.StartEnergyTypeable;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
+
+/**
+ * This button takes the user to the general solar power page
+ *
+ * @author Grace Llewellyn
+ */
 public class SolarButton extends BoardButton{
 
   private final StartEnergyTypeable startEnergyTypeable;

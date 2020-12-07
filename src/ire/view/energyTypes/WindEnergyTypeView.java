@@ -6,6 +6,11 @@ import ire.view.animations.WindEnergyAnimation;
 import ire.view.games.WindGame;
 import java.util.ResourceBundle;
 
+/**
+ * This class presents wind energy as a general energy option
+ *
+ * @author Grace Llewellyn
+ */
 public class WindEnergyTypeView extends RenewableEnergyType {
 
   public WindEnergyTypeView(ResourceBundle languageResources, SceneControls sceneControls,

@@ -3,6 +3,12 @@ package ire.view.buttons;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 
+/**
+ * This abstract class is implemented by all interactive features in the game like buttons and drop
+ * down menus
+ *
+ * @author Grace Llewellyn
+ */
 public abstract class BoardInteractiveFeature {
 
   private ResourceBundle resources;
